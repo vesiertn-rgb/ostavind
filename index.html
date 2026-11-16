@@ -1,0 +1,953 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#1A110C"><style>[hidden]{display:none!important}</style></head><body><title>Østavind</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Østavind er en kaffebar og et bakeri i Nøstegaten 22 i Bergen. Egenbrent kaffe, bakst fra eget bakeri og lunsj. Åpent alle dager.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Playfair+Display:ital,wght@0,500..900;1,500..700&display=swap">
+<style>
+/* Layout: a sticky outlined top bar over a dark, textured hero (copy left, arched photo
+   right, beans falling in front and behind). The opening hours sit in a cream band that
+   hangs over the hero's lower edge. Below: beige menu with product cards and a plain-text
+   price list, a light photo section, the owners' story, and a dark "find us" close.
+   One deliberate warm look, the same in light and dark mode. */
+:root {
+  --espresso: #1A110C;
+  --roast: #2A1B13;
+  --night: #130C08;
+  --cream: #F6ECDF;
+  --beige: #EBDBC6;
+  --paper: #F8F1E7;
+  --card: #FCF8F2;
+  --tan: #CFA57A;
+  --caramel: #8A4720;
+  --ink: #1A110C;
+  --ink-2: #5E4A3E;
+  --on-dark: #F6ECDF;
+  --on-dark-2: #CDB8A3;
+  --open: #62AF73;
+
+  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Jost", "Futura", "Century Gothic", "Helvetica Neue", Arial, sans-serif;
+  --gutter: clamp(16px, 4vw, 56px);
+  --max: 1280px;
+  --bar-h: 88px;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+/* The page canvas (seen when you drag past the edges) matches the dark top and bottom. */
+html { scroll-behavior: smooth; background: var(--espresso); overscroll-behavior-x: none; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--sans); font-size: clamp(16px, 1.1vw, 18px); line-height: 1.6;
+  font-variant-numeric: lining-nums; -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--espresso); }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--tan); outline-offset: 3px; }
+
+.wrap {
+  max-width: var(--max); margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.section { padding-block: clamp(80px, 9vw, 128px); scroll-margin-top: calc(var(--bar-h) - 8px); }
+.kicker { display: flex; align-items: center; gap: 14px; font: 600 13px/1.2 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--caramel); }
+.kicker::before { content: ""; width: 32px; height: 1px; background: currentColor; flex: none; }
+.h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.06; letter-spacing: -.012em; text-wrap: balance; }
+.intro { color: var(--ink-2); max-width: 54ch; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 18px 56px; align-items: end; }
+.sec-head > div { display: grid; gap: 16px; }
+@media (max-width: 820px) { .sec-head { grid-template-columns: 1fr; } }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-height: 52px; padding: 0 26px;
+  font: 500 16px/1 var(--sans); letter-spacing: .03em; text-decoration: none; border: 0; cursor: pointer; white-space: nowrap;
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), background-color .25s, color .25s, box-shadow .25s;
+}
+.btn svg { width: 18px; height: 18px; flex: none; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.btn:hover svg.arrow { transform: translateX(4px); }
+.btn:active { transform: scale(.98); }
+.btn.light { background: var(--cream); color: var(--espresso); }
+.btn.light:hover { background: #fff; }
+.btn.line { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+.btn.line:hover { background: var(--cream); color: var(--espresso); box-shadow: inset 0 0 0 1px var(--cream); }
+.btn.dark { background: var(--espresso); color: var(--cream); }
+.btn.dark:hover { background: var(--roast); }
+
+/* ================= TOP BAR (follows the page) ================= */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; height: var(--bar-h); transition: background-color .35s, box-shadow .35s; }
+.topbar.scrolled, .topbar.open { background: rgba(26,17,12,.97); box-shadow: 0 14px 30px -20px rgba(0,0,0,.8); }
+.bar { height: 100%; display: flex; align-items: center; }
+.bar-box {
+  flex: 1; height: 60px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px;
+  padding: 0 8px 0 22px; color: var(--on-dark); box-shadow: inset 0 0 0 1px rgba(246,236,223,.3); transition: box-shadow .35s;
+}
+.topbar.scrolled .bar-box, .topbar.open .bar-box { box-shadow: inset 0 0 0 1px rgba(246,236,223,0); }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 24px/1 var(--serif); letter-spacing: -.01em; }
+.logo svg { width: 26px; height: 26px; color: var(--tan); }
+.links { justify-self: center; display: flex; gap: clamp(20px, 2.6vw, 40px); font-size: 15px; font-weight: 500; letter-spacing: .05em; }
+.links a { text-decoration: none; color: var(--on-dark-2); padding-block: 8px; position: relative; transition: color .2s; }
+.links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 1px; background: var(--tan); transition: right .3s cubic-bezier(.2,.7,.2,1); }
+.links a:hover, .links a.active { color: var(--on-dark); }
+.links a:hover::after, .links a.active::after { right: 0; }
+.bar-end { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 18px; }
+.mini { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--on-dark-2); white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--open); flex: none; box-shadow: 0 0 0 4px rgba(98,175,115,.2); }
+.closed .dot { background: var(--tan); box-shadow: 0 0 0 4px rgba(207,165,122,.2); }
+.bar .btn { min-height: 44px; padding: 0 18px; font-size: 15px; }
+.menu-btn { display: none; width: 44px; height: 44px; border: 0; padding: 0; background: transparent; color: var(--on-dark); cursor: pointer; place-items: center; }
+.menu-btn svg { width: 24px; height: 24px; }
+.menu-btn path { transform-origin: 12px 12px; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.topbar.open .menu-btn .l1 { transform: rotate(45deg) translateY(3px); }
+.topbar.open .menu-btn .l2 { transform: rotate(-45deg) translateY(-3px); }
+.mnav { position: absolute; left: 0; right: 0; top: 100%; background: var(--espresso); padding: 4px max(var(--gutter), env(safe-area-inset-left, 0px)) 24px; display: grid; box-shadow: 0 24px 40px -24px rgba(0,0,0,.8); }
+.mnav a { font: 600 26px/1.2 var(--serif); color: var(--on-dark); text-decoration: none; padding: 14px 0; box-shadow: inset 0 -1px 0 rgba(246,236,223,.1); }
+@media (max-width: 960px) {
+  .links, .mini { display: none; }
+  .menu-btn { display: grid; }
+  .bar-box { gap: 12px; padding-left: 16px; }
+  .bar-end { gap: 6px; }
+}
+@media (max-width: 480px) { .bar .btn .num { display: none; } .bar .btn { padding: 0 13px; } }
+
+/* ================= HERO ================= */
+.hero {
+  position: relative; z-index: 2; isolation: isolate; color: var(--on-dark); background: var(--espresso);
+  margin-top: calc(-1 * var(--bar-h)); padding-top: calc(var(--bar-h) + clamp(24px, 3.4vw, 48px));
+}
+.hero-art, .hero-front { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.hero-art { z-index: 0; }
+.hero-front { z-index: 4; }
+.hero-bg { position: absolute; left: 0; right: 0; top: -12%; height: 130%; background: #2A1A12 url(img/textur.webp) center / cover no-repeat; }
+.hero-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 60% 40%, rgba(22,13,9,.62), rgba(14,8,5,.93)); }
+
+/* No z-index here on purpose: the front beans (z 4) float over the headline and photo,
+   while the opening hours (z 6) always stay on top of them. */
+.hero-grid {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  grid-template-areas: "copy visual" "hours hours"; column-gap: clamp(32px, 5vw, 80px); align-items: center;
+}
+.hero-copy { grid-area: copy; display: grid; gap: 24px; justify-items: start; }
+.hero-copy .kicker { color: var(--tan); }
+h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(48px, 5.7vw, 84px); line-height: 1.04; letter-spacing: -.015em; text-wrap: balance; }
+h1 span { display: block; }
+.lede { color: var(--on-dark-2); max-width: 44ch; font-size: clamp(17px, 1.25vw, 19px); }
+.actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; }
+.facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; margin-top: 22px; }
+.facts > div { padding: 0 28px; box-shadow: inset 1px 0 0 rgba(246,236,223,.2); }
+.facts > div:first-child { padding-left: 0; box-shadow: none; }
+.facts dt { font: 600 clamp(26px, 2.4vw, 34px)/1 var(--serif); font-variant-numeric: lining-nums; }
+.facts dd { font-size: 14px; color: var(--on-dark-2); margin-top: 8px; }
+
+.hero-visual { grid-area: visual; display: grid; justify-items: center; padding-top: 12px; }
+.arch { position: relative; width: clamp(260px, 26vw, 380px); }
+.arch::before { content: ""; position: absolute; inset: -16px 16px 16px -16px; border: 1px solid rgba(207,165,122,.5); border-radius: 999px 999px 18px 18px; z-index: -1; }
+.arch .frame { width: 100%; aspect-ratio: 3 / 4.1; overflow: hidden; border-radius: 999px 999px 14px 14px; box-shadow: 0 40px 70px -40px rgba(0,0,0,.8); }
+.arch .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 26% 50%; scale: 1.16; }
+.badge { position: absolute; left: -15%; bottom: 10%; width: clamp(104px, 9vw, 128px); aspect-ratio: 1; z-index: 3; }
+.badge svg { width: 100%; height: 100%; display: block; }
+.badge .spin { transform-origin: 50% 50%; animation: spin 26s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Opening hours: the first thing people look for */
+.hours {
+  grid-area: hours; position: relative; z-index: 6; margin-top: clamp(36px, 3.6vw, 52px); margin-bottom: -76px;
+  background: var(--cream); color: var(--ink); display: grid; grid-template-columns: 1.4fr repeat(3, 1fr);
+  box-shadow: 0 34px 60px -34px rgba(0,0,0,.6);
+}
+.hours > * { padding: 22px 24px 20px; }
+.hours > * + * { box-shadow: inset 1px 0 0 rgba(26,17,12,.1); }
+.hours h2 { font: 700 26px/1.1 var(--serif); }
+.now { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; font-size: 15px; line-height: 1.45; font-weight: 500; }
+.now .dot { margin-top: 7px; }
+.day { position: relative; display: grid; align-content: center; gap: 4px; transition: background-color .3s, color .3s; }
+.day .dn { font-size: 15px; color: var(--ink-2); display: flex; align-items: baseline; gap: 12px; }
+.day .dt { font: 600 25px/1.1 var(--serif); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.day .tag { display: none; position: absolute; top: 14px; right: 16px; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--tan); }
+.day.today { background: var(--espresso); color: var(--cream); box-shadow: none; }
+.day.today .dn { color: var(--on-dark-2); }
+.day.today .tag { display: inline; }
+.hol h3 { font: 600 12px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--caramel); margin-bottom: 8px; }
+.hol table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; }
+.hol td { padding: 2px 0; }
+.hol td:last-child { text-align: right; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
+.hol tr.today td { color: var(--caramel); font-weight: 700; }
+@media (max-width: 1080px) {
+  .hours { grid-template-columns: repeat(3, 1fr); }
+  .hours .now-cell { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; box-shadow: inset 0 -1px 0 rgba(26,17,12,.1); }
+  .hours .now-cell .now { margin-top: 0; }
+  .hours .day:nth-child(2) { box-shadow: none; }
+  .hours .hol { grid-column: 1 / -1; box-shadow: inset 0 1px 0 rgba(26,17,12,.1); }
+  .hol table { max-width: 520px; }
+}
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; grid-template-areas: "copy" "hours" "visual"; }
+  .hours { margin-top: 40px; margin-bottom: 0; }
+  .hero-visual { padding-block: 64px 72px; }
+  .arch { width: min(70vw, 340px); }
+  .badge { left: -12%; }
+}
+@media (max-width: 560px) {
+  .hours { grid-template-columns: 1fr; }
+  .hours > * { padding: 16px 18px; }
+  .hours > * + *, .hours .day:nth-child(2) { box-shadow: inset 0 1px 0 rgba(26,17,12,.1); }
+  .day { grid-template-columns: 1fr auto; align-items: center; }
+  .day .tag { position: static; }
+  .day .dt { font-size: 21px; }
+  .facts > div { padding: 0 16px; }
+  .facts dd { font-size: 13px; }
+}
+
+/* Beans fall into place on load, then drift; scroll moves each layer at its own speed. */
+.bean { position: absolute; width: var(--s, 60px); height: auto; transform: rotate(var(--r)); filter: blur(var(--b, 0px)) drop-shadow(0 12px 16px rgba(0,0,0,.4)); }
+.bean.b1 { --s: 104px; left: 57%; top: 13%; --r: -25deg; --b: 1px; }
+.bean.b2 { --s: 80px; right: 5%; top: 19%; --r: 35deg; --b: 2px; }
+.bean.b4 { --s: 46px; left: 52%; top: 66%; --r: 60deg; --b: 3.5px; opacity: .8; }
+.bean.f1 { --s: 100px; left: 45%; top: 27%; --r: -15deg; }
+.bean.f2 { --s: 150px; right: -3%; top: 56%; --r: 125deg; --b: 6px; }
+.bean.f3 { --s: 190px; left: -5%; top: 70%; --r: -35deg; --b: 9px; }
+@media (prefers-reduced-motion: no-preference) {
+  .bean { animation: drop 1.3s cubic-bezier(.3,1.25,.5,1) both, float 7s ease-in-out 1.3s infinite alternate; }
+  .bean.b2 { animation-delay: .15s, 1.45s; } .bean.b4 { animation-delay: .05s, 1.35s; }
+  .bean.f1 { animation-delay: .5s, 1.8s; } .bean.f2 { animation-delay: .25s, 1.55s; } .bean.f3 { animation-delay: .35s, 1.65s; }
+}
+@keyframes drop { from { transform: translateY(-110vh) rotate(calc(var(--r) - 220deg)); } to { transform: translateY(0) rotate(var(--r)); } }
+@keyframes float { to { transform: translateY(-14px) rotate(calc(var(--r) + 14deg)); } }
+@media (max-width: 860px) {
+  .bean.b1, .bean.b4 { display: none; }
+  .bean.b2 { --s: 46px; right: 3%; top: 27%; }
+  .bean.f1 { --s: 54px; left: auto; right: 4%; top: 10%; }
+  .bean.f2 { --s: 100px; right: -8%; top: 80%; }
+  .bean.f3 { --s: 110px; left: -10%; top: 90%; }
+}
+[data-speed] { will-change: translate; }
+
+/* ================= MENU ================= */
+.menu { background: var(--beige); position: relative; overflow: hidden; }
+.menu .deco { position: absolute; right: -120px; top: 120px; width: 520px; height: auto; color: rgba(26,17,12,.045); pointer-events: none; transform: rotate(24deg); }
+.menu .wrap { position: relative; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); margin-top: clamp(40px, 5vw, 64px); }
+.card { background: var(--card); display: flex; flex-direction: column; transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 26px 44px -28px rgba(60,30,10,.55); }
+.card .ph { aspect-ratio: 4 / 3.2; overflow: hidden; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.card:hover .ph img { transform: scale(1.05); }
+.card .body { padding: 22px 24px 26px; display: grid; gap: 8px; }
+.card .top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.card h3 { font: 600 26px/1.15 var(--serif); }
+.card .price { font: 600 20px/1 var(--serif); color: var(--caramel); white-space: nowrap; font-variant-numeric: lining-nums; }
+.card p { color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+@media (max-width: 860px) {
+  .cards { grid-template-columns: 1fr; max-width: 560px; }
+  .card { display: grid; grid-template-columns: 38% 1fr; }
+  .card .ph { aspect-ratio: auto; min-height: 150px; }
+  .card .body { padding: 16px 18px; align-content: center; }
+  .card h3 { font-size: 21px; }
+}
+
+.menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px clamp(40px, 7vw, 112px); margin-top: clamp(64px, 7vw, 96px); }
+.cat h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font: 700 30px/1.1 var(--serif); padding-bottom: 14px; margin-bottom: 6px; box-shadow: inset 0 -2px 0 var(--ink); }
+.cat h3 small { font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--caramel); }
+.item { padding: 11px 0; }
+.item .row { display: flex; align-items: baseline; gap: 10px; }
+.item .n { font-weight: 500; font-size: 17px; }
+.item .dots { flex: 1; min-width: 24px; border-bottom: 2px dotted rgba(26,17,12,.26); transform: translateY(-5px); }
+.item .p { font-weight: 600; font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.item .d { display: block; color: var(--ink-2); font-size: 15px; line-height: 1.45; margin-top: 2px; padding-right: 56px; }
+.menu-note { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 10px 36px; color: var(--ink-2); font-size: 15px; }
+.menu-note span { display: inline-flex; align-items: center; gap: 10px; }
+.menu-note span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--caramel); flex: none; }
+@media (max-width: 820px) { .menu-grid { grid-template-columns: 1fr; } .item .d { padding-right: 0; } }
+
+/* ================= PHOTOS ================= */
+.photos { background: var(--paper); }
+.mosaic { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(150px, 16vw, 230px); gap: clamp(10px, 1.4vw, 16px); margin-top: clamp(40px, 5vw, 60px); }
+.mosaic figure { overflow: hidden; position: relative; background: var(--beige); }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.mosaic figure:hover img { transform: scale(1.05); }
+.mosaic figcaption { position: absolute; left: 0; bottom: 0; background: var(--card); color: var(--ink); font-size: 14px; font-weight: 500; padding: 8px 14px; }
+.mosaic .big { grid-column: span 2; grid-row: span 2; }
+.mosaic .tall { grid-row: span 2; }
+.mosaic .wide { grid-column: span 2; }
+@media (max-width: 760px) { .mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 44vw; } }
+
+/* ================= ABOUT ================= */
+.about { background: var(--beige); }
+.about-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px clamp(48px, 8vw, 128px); align-items: center; }
+.tilt { padding: 20px; }
+.tilt-ph { position: relative; }
+.tilt-ph::before { content: ""; position: absolute; inset: 0; border: 1.5px solid var(--caramel); transform: rotate(4deg) translate(14px, 6px); }
+.tilt img { position: relative; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transform: rotate(-2.5deg); box-shadow: 0 30px 50px -30px rgba(40,20,8,.55); }
+.tilt figcaption { margin-top: 30px; font-size: 14px; color: var(--ink-2); }
+.about-copy { display: grid; gap: 18px; }
+.about-copy .h2 { margin-bottom: 4px; }
+.about-copy p.lead { font: 500 clamp(20px, 1.7vw, 24px)/1.45 var(--serif); }
+.about-copy p { max-width: 58ch; }
+.sign { font: italic 600 26px/1.2 var(--serif); color: var(--caramel); margin-top: 6px; }
+@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } .tilt { max-width: 420px; } }
+
+/* ================= FIND US ================= */
+.find { background: var(--espresso); color: var(--on-dark); }
+.find .kicker { color: var(--tan); }
+.find .intro { color: var(--on-dark-2); }
+.find-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px clamp(32px, 5vw, 72px); margin-top: clamp(40px, 5vw, 60px); align-items: start; }
+.map { position: relative; overflow: hidden; background: #E9DFCF; }
+.map > svg { display: block; width: 100%; height: auto; }
+.map .open-map { position: absolute; right: 14px; bottom: 14px; }
+.find-info { display: grid; gap: 30px; }
+.find-info h3 { font: 600 12px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--tan); margin-bottom: 10px; }
+.find-info p { color: var(--on-dark-2); }
+.find-info .addr { font: 700 clamp(28px, 2.8vw, 38px)/1.12 var(--serif); color: var(--on-dark); margin-bottom: 10px; }
+.contact { display: grid; gap: 10px; }
+.contact a { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; text-decoration: none; color: var(--on-dark); background: rgba(246,236,223,.06); transition: background-color .25s; }
+.contact a:hover { background: rgba(246,236,223,.12); }
+.contact a svg { width: 22px; height: 22px; flex: none; color: var(--tan); }
+.contact a span { font-weight: 500; font-size: 17px; line-height: 1.3; }
+.contact a small { display: block; font-weight: 400; font-size: 13px; color: var(--on-dark-2); }
+.contact a.call { background: var(--cream); color: var(--espresso); }
+.contact a.call svg { color: var(--caramel); }
+.contact a.call small { color: var(--ink-2); }
+.contact a.call:hover { background: #fff; }
+@media (max-width: 860px) { .find-grid { grid-template-columns: 1fr; } }
+
+/* ================= FOOTER ================= */
+footer { background: var(--night); color: var(--on-dark-2); font-size: 15px; overflow: hidden; }
+.foot-mark { display: block; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; font: 900 clamp(88px, 19vw, 290px)/.78 var(--serif); letter-spacing: -.035em; color: rgba(246,236,223,.06); margin-top: 8px; margin-bottom: -.08em; }
+.foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr auto; gap: 36px 48px; padding-block: 64px 44px; }
+.foot-col h3 { font: 600 12px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--tan); margin-bottom: 12px; }
+.foot-col .logo { color: var(--on-dark); margin-bottom: 14px; }
+.foot-col p { line-height: 1.7; max-width: 34ch; }
+.foot-col a { text-decoration: none; }
+.foot-col a:hover { color: var(--on-dark); }
+.social { display: flex; gap: 10px; }
+.social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(246,236,223,.3); color: var(--on-dark); transition: background-color .25s, color .25s, box-shadow .25s; }
+.social a:hover { background: var(--cream); color: var(--espresso); box-shadow: inset 0 0 0 1px var(--cream); }
+.social svg { width: 18px; height: 18px; }
+.legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding-block: 22px 30px; font-size: 13px; box-shadow: inset 0 1px 0 rgba(246,236,223,.1); }
+@media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .foot-grid { grid-template-columns: 1fr; } }
+
+/* The first section sits under the hanging hours band on wide screens. */
+@media (min-width: 861px) {
+  main > section:first-child { padding-top: calc(76px + clamp(72px, 8vw, 112px)); scroll-margin-top: 12px; }
+  body.editing main > section:first-child > .sec-tools { top: 92px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  .d1 { animation-delay: .08s; } .d2 { animation-delay: .16s; } .d3 { animation-delay: .24s; } .d4 { animation-delay: .32s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
+
+/* ================= EDIT MODE (only for people who can edit the artifact) ================= */
+.ed-toggle { position: fixed; z-index: 90; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; border: 0; cursor: pointer; font: 500 15px/1 var(--sans); letter-spacing: .03em; background: var(--espresso); color: var(--cream); box-shadow: 0 10px 30px -10px rgba(0,0,0,.5), inset 0 0 0 1px rgba(246,236,223,.25); }
+.ed-toggle svg { width: 18px; height: 18px; }
+body.editing .ed-toggle { display: none; }
+.ed-bar { position: fixed; z-index: 95; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); width: min(760px, calc(100% - 24px)); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 12px 12px 18px; background: var(--espresso); color: var(--cream); box-shadow: 0 18px 50px -12px rgba(0,0,0,.55); font: 400 14px/1.35 var(--sans); }
+.ed-bar .msg { flex: 1 1 220px; min-width: 0; }
+.ed-bar .msg strong { display: block; font-size: 15px; font-weight: 600; }
+.ed-bar .msg span { color: var(--on-dark-2); } .ed-bar .msg span.dirty { color: #F0B98C; } .ed-bar .msg span.ok { color: #9FD8AA; }
+.ed-bar button { font: 500 14px/1 var(--sans); min-height: 42px; padding: 0 16px; border: 0; cursor: pointer; }
+.ed-bar .b-save { background: var(--cream); color: var(--espresso); } .ed-bar .b-save:disabled { opacity: .4; cursor: default; }
+.ed-bar .b-ghost { background: rgba(246,236,223,.1); color: var(--cream); }
+body.editing { padding-bottom: 110px; }
+body.editing [data-k] { outline: 1.5px dashed rgba(184,120,70,.7); outline-offset: 3px; cursor: text; }
+body.editing [data-k]:hover { outline-style: solid; }
+body.editing [data-k]:focus { outline: 2px solid #C77B3F; }
+body.editing img { -webkit-user-drag: none; user-select: none; }
+body.editing .hero-front { display: none; }
+body.editing main > section { position: relative; }
+.sec-tools { position: absolute; z-index: 40; top: 14px; left: max(12px, env(safe-area-inset-left, 0px)); display: inline-flex; align-items: center; gap: 4px; padding: 4px 4px 4px 14px; background: var(--espresso); color: var(--cream); font: 500 13px/1 var(--sans); box-shadow: 0 8px 24px -10px rgba(0,0,0,.6); }
+.sec-tools button, .mv button { width: 34px; height: 34px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: transparent; color: inherit; font: 600 16px/1 var(--sans); }
+.sec-tools button:hover, .mv button:hover { background: rgba(246,236,223,.16); }
+.sec-tools button:disabled, .mv button:disabled { opacity: .3; cursor: default; background: transparent; }
+.mv { position: fixed; z-index: 80; display: none; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: #A35A2A; color: #FFF7EE; box-shadow: 0 8px 22px -8px rgba(0,0,0,.55); }
+.mv.show { display: inline-flex; }
+.mv .grip { cursor: grab; touch-action: none; }
+body.dragging, body.dragging * { cursor: grabbing !important; user-select: none !important; }
+body.dragging .mv { pointer-events: none; }
+.is-dragging { opacity: .55; outline: 2px solid #C77B3F !important; outline-offset: 3px; }
+.is-hover { outline: 2px solid rgba(184,120,70,.75); outline-offset: 3px; }
+@media (max-width: 560px) { .ed-bar { padding: 10px; } .ed-bar .msg span { display: none; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></g></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 30 30"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="15" cy="15" rx="10" ry="13.5" transform="rotate(28 15 15)"/><path d="M19.5 4.5 C 12 10, 19 18, 10.5 25.5"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar" id="topbar">
+  <div class="wrap bar">
+    <div class="bar-box">
+      <a class="logo" href="#top" aria-label="Østavind, til toppen"><svg aria-hidden="true"><use href="#i-mark"/></svg>Østavind</a>
+      <nav class="links" aria-label="Hovedmeny">
+        <a href="#meny">Meny</a>
+        <a href="#hos-oss">Hos oss</a>
+        <a href="#om-oss">Om oss</a>
+        <a href="#finn-oss">Finn oss</a>
+      </nav>
+      <div class="bar-end">
+        <span class="mini" id="mini"><i class="dot"></i><span>Åpent alle dager</span></span>
+        <a class="btn light" href="tel:+4755001234" aria-label="Ring Østavind på 55 00 12 34"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="num">55 00 12 34</span></a>
+        <button class="menu-btn" id="menu-btn" type="button" aria-controls="mnav" aria-expanded="false" aria-label="Åpne meny"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="l1" d="M4 9h16"/><path class="l2" d="M4 15h16"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Meny" hidden>
+    <a href="#meny">Meny</a>
+    <a href="#hos-oss">Hos oss</a>
+    <a href="#om-oss">Om oss</a>
+    <a href="#finn-oss">Finn oss</a>
+  </nav>
+</header>
+
+<!-- ================= HERO + OPENING HOURS ================= -->
+<section class="hero" id="top" aria-label="Østavind">
+  <div class="hero-art" aria-hidden="true">
+    <div class="hero-bg" data-speed="0.35"></div>
+    <img class="bean b1" src="img/beans/bean-1.webp" alt="" data-speed="0.22" data-spin="0.05">
+    <img class="bean b2" src="img/beans/bean-3.webp" alt="" data-speed="0.3" data-spin="-0.08">
+    <img class="bean b4" src="img/beans/bean-2.webp" alt="" data-speed="0.5" data-spin="0.03">
+  </div>
+  <div class="hero-front" aria-hidden="true">
+    <img class="bean f1" src="img/beans/bean-4.webp" alt="" data-speed="-0.5" data-spin="0.04">
+    <img class="bean f2" src="img/beans/bean-1.webp" alt="" data-speed="-0.75" data-spin="-0.1">
+    <img class="bean f3" src="img/beans/bean-5.webp" alt="" data-speed="-0.45" data-spin="-0.06">
+  </div>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker rise">Kaffebar og bakeri i Bergen</p>
+      <h1 class="rise d1"><span>Kaffe og bakst</span><span>på Nøstet</span></h1>
+      <p class="lede rise d2">Vi brenner kaffen selv og baker brød og bakst på stedet hver morgen. Lunsj serveres mellom kl. 11.00 og 15.00.</p>
+      <div class="actions rise d3">
+        <a class="btn light" href="#meny">Se menyen <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn line" href="#finn-oss">Finn veien</a>
+      </div>
+      <dl class="facts rise d4">
+        <div><dt>32</dt><dd>sitteplasser inne</dd></div>
+        <div><dt>05.00</dt><dd>bakeriet starter</dd></div>
+        <div><dt>2019</dt><dd>åpnet i Nøstegaten</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero-visual">
+      <div class="arch rise d2" data-speed="-0.08">
+        <div class="frame"><img id="hero-img" src="img/hero-iskaffe.webp" alt="Iskaffe med melk i et høyt glass" width="1100" height="734" fetchpriority="high"></div>
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="70" fill="#F6ECDF"/>
+            <g class="spin">
+              <path id="ring" d="M70,70 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" fill="none"/>
+              <text font-family="Jost, sans-serif" font-size="11.4" font-weight="600" letter-spacing="1.8" fill="#1A110C"><textPath href="#ring">EGENBRENT KAFFE • NØSTET • SIDEN 2019 • </textPath></text>
+            </g>
+            <svg x="53" y="47" width="34" height="46" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="27" ry="37" fill="#8A4720"/><path d="M31 6 C 18 24, 44 40, 30 56 C 22 65, 30 72, 31 74" fill="none" stroke="#F6ECDF" stroke-width="6" stroke-linecap="round"/></svg>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <section class="hours rise d3" aria-labelledby="hours-title">
+      <div class="now-cell">
+        <h2 id="hours-title">Åpningstider</h2>
+        <p class="now" id="now"><i class="dot"></i><span>Åpent alle dager</span></p>
+      </div>
+      <div class="day" data-days="1,2,3,4,5"><span class="dn">Mandag–fredag <span class="tag">I dag</span></span><span class="dt">07.30–18.00</span></div>
+      <div class="day" data-days="6"><span class="dn">Lørdag <span class="tag">I dag</span></span><span class="dt">09.00–17.00</span></div>
+      <div class="day" data-days="0"><span class="dn">Søndag <span class="tag">I dag</span></span><span class="dt">10.00–16.00</span></div>
+    </section>
+  </div>
+</section>
+
+<main>
+<!-- ================= MENU ================= -->
+<section class="section menu" id="meny" aria-labelledby="meny-tittel">
+  <svg class="deco" viewBox="0 0 60 80" aria-hidden="true"><ellipse cx="30" cy="40" rx="27" ry="37" fill="currentColor"/><path d="M31 6 C 18 24, 44 40, 30 56 C 22 65, 30 72, 31 74" fill="none" stroke="#EBDBC6" stroke-width="3" stroke-linecap="round"/></svg>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Meny</p>
+        <h2 class="h2" id="meny-tittel">Kaffe, bakst og lunsj</h2>
+      </div>
+      <p class="intro">Prisene er oppgitt i kroner, inkludert mva., og gjelder både servering og take away. Havremelk og laktosefri melk uten tillegg.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <div class="ph"><img src="img/flatwhite.webp" alt="Cappuccino med latte art på hvitt fat"></div>
+        <div class="body"><div class="top"><h3>Cappuccino</h3><span class="price">56,-</span></div><p>Dobbel espresso av ukens bønne og 25 cl dampet melk.</p></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="img/islatte.webp" alt="Iskaffe med melk i glass på et trebord"></div>
+        <div class="body"><div class="top"><h3>Iskaffe</h3><span class="price">58,-</span></div><p>Kaldbrygget i 14 timer. Serveres over is, med eller uten melk.</p></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="img/brod.webp" alt="Tre grove brød med korn på toppen"></div>
+        <div class="body"><div class="top"><h3>Grovbrød</h3><span class="price">69,-</span></div><p>Sammalt hvete og solsikkekjerner. Bakt hver morgen, selges helt.</p></div>
+      </article>
+    </div>
+
+    <div class="menu-grid">
+      <div class="cat">
+        <h3>Kaffe</h3>
+        <ul id="m-kaffe">
+          <li class="item"><div class="row"><span class="n">Espresso</span><span class="dots"></span><span class="p">39,-</span></div><span class="d">Dobbel shot av ukens espressobønne</span></li>
+          <li class="item"><div class="row"><span class="n">Americano</span><span class="dots"></span><span class="p">45,-</span></div><span class="d">Espresso og varmt vann</span></li>
+          <li class="item"><div class="row"><span class="n">Cortado</span><span class="dots"></span><span class="p">52,-</span></div><span class="d">Espresso med like mye dampet melk</span></li>
+          <li class="item"><div class="row"><span class="n">Cappuccino</span><span class="dots"></span><span class="p">56,-</span></div><span class="d">25 cl</span></li>
+          <li class="item"><div class="row"><span class="n">Flat white</span><span class="dots"></span><span class="p">58,-</span></div><span class="d">Dobbel ristretto, 20 cl</span></li>
+          <li class="item"><div class="row"><span class="n">Caffè latte</span><span class="dots"></span><span class="p">60,-</span></div><span class="d">35 cl</span></li>
+          <li class="item"><div class="row"><span class="n">Filterkaffe</span><span class="dots"></span><span class="p">42,-</span></div><span class="d">Påfyll 15,- ved samme besøk</span></li>
+          <li class="item"><div class="row"><span class="n">Håndbrygget V60</span><span class="dots"></span><span class="p">62,-</span></div><span class="d">Ukens bønne: Finca La Esperanza, Colombia</span></li>
+        </ul>
+      </div>
+      <div class="cat">
+        <h3>Annen drikke</h3>
+        <ul id="m-drikke">
+          <li class="item"><div class="row"><span class="n">Varm sjokolade</span><span class="dots"></span><span class="p">55,-</span></div><span class="d">Med 70 % mørk sjokolade</span></li>
+          <li class="item"><div class="row"><span class="n">Chai latte</span><span class="dots"></span><span class="p">58,-</span></div><span class="d">Kokt på hele krydder</span></li>
+          <li class="item"><div class="row"><span class="n">Iskaffe</span><span class="dots"></span><span class="p">58,-</span></div><span class="d">Kaldbrygget i 14 timer, med eller uten melk</span></li>
+          <li class="item"><div class="row"><span class="n">Te i kanne</span><span class="dots"></span><span class="p">45,-</span></div><span class="d">Earl Grey, grønn te, rooibos eller kamille</span></li>
+          <li class="item"><div class="row"><span class="n">Eplemost</span><span class="dots"></span><span class="p">45,-</span></div><span class="d">Fra Lofthus i Hardanger, 33 cl</span></li>
+        </ul>
+      </div>
+      <div class="cat">
+        <h3>Bakst <small>Fra kl. 07.30</small></h3>
+        <ul id="m-bakst">
+          <li class="item"><div class="row"><span class="n">Skillingsbolle</span><span class="dots"></span><span class="p">49,-</span></div><span class="d">Kanelbolle med perlesukker</span></li>
+          <li class="item"><div class="row"><span class="n">Kardemommebolle</span><span class="dots"></span><span class="p">45,-</span></div></li>
+          <li class="item"><div class="row"><span class="n">Croissant</span><span class="dots"></span><span class="p">42,-</span></div><span class="d">Med smør og syltetøy 55,-</span></li>
+          <li class="item"><div class="row"><span class="n">Gulrotkake</span><span class="dots"></span><span class="p">65,-</span></div><span class="d">Med ostekrem og valnøtter</span></li>
+          <li class="item"><div class="row"><span class="n">Mandelkake</span><span class="dots"></span><span class="p">62,-</span></div><span class="d">Glutenfri</span></li>
+          <li class="item"><div class="row"><span class="n">Grovbrød, helt</span><span class="dots"></span><span class="p">69,-</span></div><span class="d">Sammalt hvete og solsikkekjerner</span></li>
+        </ul>
+      </div>
+      <div class="cat">
+        <h3>Frokost og lunsj</h3>
+        <ul id="m-mat">
+          <li class="item"><div class="row"><span class="n">Havregrøt</span><span class="dots"></span><span class="p">85,-</span></div><span class="d">Med eple, kanel og brunt smør. Serveres til kl. 11.00</span></li>
+          <li class="item"><div class="row"><span class="n">Grovt rundstykke</span><span class="dots"></span><span class="p">69,-</span></div><span class="d">Med Norvegia, agurk og paprika</span></li>
+          <li class="item"><div class="row"><span class="n">Toast</span><span class="dots"></span><span class="p">105,-</span></div><span class="d">Surdeigsbrød med skinke, cheddar og sennep</span></li>
+          <li class="item"><div class="row"><span class="n">Dagens suppe</span><span class="dots"></span><span class="p">145,-</span></div><span class="d">Med surdeigsbrød og smør. Fra kl. 11.00</span></li>
+          <li class="item"><div class="row"><span class="n">Rekesmørbrød</span><span class="dots"></span><span class="p">169,-</span></div><span class="d">Kun fredag, så lenge det er igjen</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="menu-note"><span>Allergener er merket i disken. Spør oss gjerne.</span><span>Vi tar kort og Vipps.</span><span>Kaffebønner selges i 250 g pose fra 169,-</span></p>
+  </div>
+</section>
+
+<!-- ================= PHOTOS ================= -->
+<section class="section photos" id="hos-oss" aria-labelledby="hos-tittel">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Hos oss</p>
+        <h2 class="h2" id="hos-tittel">Et lyst lokale i Nøstegaten</h2>
+      </div>
+      <p class="intro">Lokalet ligger i første etasje med store vinduer mot gaten. Morgensola kommer inn fra kl. 09 om sommeren, og langbordet ved vinduet har plass til ti.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="big"><img src="img/lokale-lys.webp" alt="Lyst lokale med disk, hyller og lamper"><figcaption>Disken</figcaption></figure>
+      <figure class="tall"><img src="img/kopper.webp" alt="Tre kopper flat white blant grønne planter"><figcaption>Flat white</figcaption></figure>
+      <figure><img src="img/melk.webp" alt="Dampet melk helles i en kopp kaffe"><figcaption>Caffè latte</figcaption></figure>
+      <figure><img src="img/skal.webp" alt="To kopper cappuccino sett ovenfra"><figcaption>Cappuccino for to</figcaption></figure>
+      <figure class="wide"><img src="img/langbord.webp" alt="Langbord ved store vinduer"><figcaption>Langbordet ved vinduet</figcaption></figure>
+      <figure class="wide"><img src="img/planter.webp" alt="Sitteplasser med planter i dagslys"><figcaption>Bakre del av lokalet</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section about" id="om-oss" aria-labelledby="om-tittel">
+  <div class="wrap about-grid">
+    <figure class="tilt">
+      <div class="tilt-ph"><img src="img/barista.webp" alt="Tor Hauge brygger filterkaffe bak disken"></div>
+      <figcaption>Tor ved bryggebaren en tirsdag morgen.</figcaption>
+    </figure>
+    <div class="about-copy">
+      <p class="kicker">Om oss</p>
+      <h2 class="h2" id="om-tittel">Drevet av to søsken siden 2019</h2>
+      <p class="lead">Østavind drives av Kari og Tor Hauge. Vi åpnet i mars 2019 i lokalet som i 41 år var Nøstet Skomakerverksted.</p>
+      <p>Kari er utdannet konditor og har jobbet ti år i bakerier i Bergen og Oslo. Hun starter bakingen kl. 05.00 hver morgen. Tor brenner kaffen i bakrommet på en 5-kilos brenner hver tirsdag og fredag. Råkaffen kjøper vi direkte fra Finca La Esperanza i Huila, Colombia, og fra et kooperativ i Nyeri, Kenya.</p>
+      <p>Navnet har vi fra bestefarens snekke, som lå fortøyd ved Nøstekaien fra 1958 til 1991. Et bilde av båten henger over disken.</p>
+      <p class="sign">Kari og Tor</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIND US + CONTACT ================= -->
+<section class="section find" id="finn-oss" aria-labelledby="finn-tittel">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Finn oss</p>
+        <h2 class="h2" id="finn-tittel">15 minutter fra Torget</h2>
+      </div>
+      <p class="intro">Gå langs Strandkaien mot Nøstet. Nærmeste bussholdeplass er Nøstet, rett ved inngangen.</p>
+    </div>
+    <div class="find-grid">
+      <!-- Kartplassholder: bytt ut <div class="map"> med <iframe> fra Google Maps (Del, Bygg inn et kart). -->
+      <div class="map">
+        <svg viewBox="0 0 800 520" role="img" aria-label="Kart som viser Østavind i Nøstegaten 22, ved Nøstekaien i Bergen">
+          <rect width="800" height="520" fill="#E9DFCF"/>
+          <path d="M0 360 C 120 340 210 390 330 400 C 450 410 520 470 620 520 L 0 520 Z" fill="#BCCFD3"/>
+          <text x="70" y="470" font-family="Jost, sans-serif" font-size="18" font-style="italic" fill="#6B8C97">Puddefjorden</text>
+          <g fill="#DDD0B9">
+            <rect x="40" y="40" width="150" height="110"/><rect x="220" y="40" width="190" height="110"/><rect x="440" y="40" width="140" height="110"/><rect x="610" y="40" width="160" height="110"/>
+            <rect x="40" y="185" width="150" height="120"/><rect x="220" y="185" width="190" height="125"/><rect x="440" y="185" width="140" height="130"/><rect x="610" y="185" width="160" height="150"/>
+          </g>
+          <rect x="560" y="360" width="240" height="160" fill="#D0DEC6"/>
+          <text x="620" y="455" font-family="Jost, sans-serif" font-size="16" fill="#5E7A57">Nøstetorget</text>
+          <g stroke="#FBF6EE" stroke-linecap="round" fill="none">
+            <path d="M0 168 H 800" stroke-width="22"/>
+            <path d="M205 0 V 340" stroke-width="18"/>
+            <path d="M425 0 V 360" stroke-width="18"/>
+            <path d="M595 0 V 360" stroke-width="14"/>
+            <path d="M0 330 C 140 320 260 345 400 352 C 500 357 560 350 800 345" stroke-width="20"/>
+          </g>
+          <g font-family="Jost, sans-serif" font-size="15" font-weight="500" fill="#7A6656">
+            <text x="650" y="173">Nøstegaten</text>
+            <text x="250" y="347" transform="rotate(2 250 347)">Nøstekaien</text>
+            <text x="200" y="60" transform="rotate(90 200 60)">Nøstebakken</text>
+            <text x="420" y="60" transform="rotate(90 420 60)">Ytre Markevei</text>
+          </g>
+          <g transform="translate(500 168)">
+            <circle r="34" fill="#8A4720" opacity=".16"/>
+            <path d="M0 0 C -6 -14 -22 -24 -22 -40 A 22 22 0 0 1 22 -40 C 22 -24 6 -14 0 0 Z" fill="#8A4720"/>
+            <circle cy="-40" r="8" fill="#F6ECDF"/>
+            <rect x="-64" y="-100" width="128" height="38" fill="#1A110C"/>
+            <text y="-75" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" font-weight="700" fill="#F6ECDF">Østavind</text>
+          </g>
+        </svg>
+        <a class="btn dark open-map" href="https://www.google.com/maps/search/?api=1&amp;query=N%C3%B8stegaten%2022%2C%205011%20Bergen" target="_blank" rel="noopener">Åpne i Google Maps <svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="find-info">
+        <div>
+          <h3>Adresse</h3>
+          <p class="addr">Nøstegaten 22<br>5011 Bergen</p>
+          <p>Trinnfri inngang. Rullestoltilgjengelig toalett. Sykkelparkering ved inngangen.</p>
+        </div>
+        <div>
+          <h3>Kontakt</h3>
+          <div class="contact">
+            <a class="call" href="tel:+4755001234"><svg aria-hidden="true"><use href="#i-phone"/></svg><span>55 00 12 34<small>Trykk for å ringe</small></span></a>
+            <a href="mailto:post@ostavind.no"><svg aria-hidden="true"><use href="#i-mail"/></svg><span>post@ostavind.no<small>Kakebestilling minst tre virkedager i forveien</small></span></a>
+            <a href="https://www.instagram.com/ostavind.bergen" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ig"/></svg><span>Instagram<small>@ostavind.bergen</small></span></a>
+            <a href="https://www.facebook.com/ostavindbergen" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-fb"/></svg><span>Facebook<small>Østavind Bergen</small></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <a class="logo" href="#top" aria-label="Østavind, til toppen"><svg aria-hidden="true"><use href="#i-mark"/></svg>Østavind</a>
+      <p>Kaffebar og bakeri i Nøstegaten 22, 5011 Bergen. Egenbrent kaffe siden 2019.</p>
+    </div>
+    <div class="foot-col">
+      <h3>Åpningstider</h3>
+      <p>Mandag–fredag 07.30–18.00<br>Lørdag 09.00–17.00<br>Søndag 10.00–16.00</p>
+    </div>
+    <div class="foot-col">
+      <h3>Kontakt</h3>
+      <p><a href="tel:+4755001234">55 00 12 34</a><br><a href="mailto:post@ostavind.no">post@ostavind.no</a></p>
+    </div>
+    <div class="foot-col">
+      <h3>Følg oss</h3>
+      <div class="social">
+        <a href="https://www.instagram.com/ostavind.bergen" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
+        <a href="https://www.facebook.com/ostavindbergen" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="legal"><span>© 2026 Østavind AS · Org.nr. 923 456 789</span><span>Designkonsept. Bilder fra Unsplash.</span></div></div>
+  <div class="foot-mark" aria-hidden="true">Østavind</div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+  /* ---- Top bar: follows the page, turns solid once you scroll ---- */
+  const topbar = $('#topbar'), mnav = $('#mnav'), menuBtn = $('#menu-btn');
+  const onScroll = () => topbar.classList.toggle('scrolled', scrollY > 12);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  function setMenu(open) {
+    mnav.hidden = !open; topbar.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Lukk meny' : 'Åpne meny');
+  }
+  menuBtn.addEventListener('click', () => setMenu(mnav.hidden));
+  mnav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !mnav.hidden) { setMenu(false); menuBtn.focus(); } });
+  addEventListener('resize', () => { if (innerWidth > 960 && !mnav.hidden) setMenu(false); });
+  const navLinks = $$('.links a');
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(entries => {
+      for (const en of entries) if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    [$('.hero'), ...$$('main > section[id]')].forEach(s => spy.observe(s));
+  }
+
+  /* ---- Opening hours, in Bergen time, with holiday exceptions ---- */
+  const week = { 0: [10, 16], 1: [7.5, 18], 2: [7.5, 18], 3: [7.5, 18], 4: [7.5, 18], 5: [7.5, 18], 6: [9, 17] };
+  const special = {};
+  const DAYS = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
+  const fmt = h => String(Math.floor(h)).padStart(2, '0') + '.' + String(Math.round((h % 1) * 60)).padStart(2, '0');
+  function oslo(offsetDays = 0) {
+    const d = new Date(Date.now() + offsetDays * 864e5);
+    try {
+      const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Oslo', weekday: 'short', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(d);
+      const g = k => p.find(x => x.type === k).value;
+      return { wd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(g('weekday')), md: g('month') + '-' + g('day'), h: +g('hour') + +g('minute') / 60 };
+    } catch { return { wd: d.getDay(), md: String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'), h: d.getHours() + d.getMinutes() / 60 }; }
+  }
+  const hoursFor = t => (t.md in special ? special[t.md] : week[t.wd]);
+  function updateHours() {
+    const t = oslo(), today = hoursFor(t), now = $('#now'), mini = $('#mini');
+    let long = 'Åpent alle dager', short = 'Åpent alle dager', open = false;
+    if (today && t.h >= today[0] && t.h < today[1]) { open = true; long = `Åpent nå, stenger kl. ${fmt(today[1])}`; short = `Åpent nå, til ${fmt(today[1])}`; }
+    else if (today && t.h < today[0]) { long = `Stengt nå, åpner kl. ${fmt(today[0])} i dag`; short = `Stengt, åpner ${fmt(today[0])}`; }
+    else {
+      for (let i = 1; i < 8; i++) {
+        const o = oslo(i), n = hoursFor(o);
+        if (n) { const when = i === 1 ? 'i morgen' : DAYS[o.wd]; long = `Stengt nå, åpner kl. ${fmt(n[0])} ${when}`; short = `Stengt, åpner ${when} ${fmt(n[0])}`; break; }
+      }
+    }
+    now.querySelector('span').textContent = long; mini.querySelector('span').textContent = short;
+    now.classList.toggle('closed', !open); mini.classList.toggle('closed', !open);
+    $$('.hours .day').forEach(d => d.classList.toggle('today', d.dataset.days.split(',').includes(String(t.wd))));
+    $$('.hol tr').forEach(tr => tr.classList.toggle('today', tr.dataset.md.split(',').includes(t.md)));
+  }
+  updateHours(); setInterval(updateHours, 60000);
+
+  /* ================= EDIT MODE =================
+     Text and order live in content.json next to the page. Everyone gets it on load;
+     people who can edit the artifact can change it and save a new version. */
+  const VERSION = 3;
+  const TEXT_SEL = '.kicker, h1 span, .lede, .facts dt, .facts dd, .hours h2, .day .dn, .day .dt, .hol h3, .hol td, .h2, .intro, .card h3, .card p, .card .price, .cat h3, .item .n, .item .p, .item .d, .menu-note span, .mosaic figcaption, .tilt figcaption, .about-copy p, .find-info h3, .find-info p, .contact a span, .foot-col h3, .foot-col p, .legal span';
+  const LISTS = {
+    sections: { sel: 'main', axis: 'y' },
+    cards: { sel: '.cards', axis: 'x' },
+    menu: { sel: '.menu-grid', axis: 'x' },
+    kaffe: { sel: '#m-kaffe', axis: 'y' }, drikke: { sel: '#m-drikke', axis: 'y' },
+    bakst: { sel: '#m-bakst', axis: 'y' }, mat: { sel: '#m-mat', axis: 'y' },
+    photos: { sel: '.mosaic', axis: 'x' }, contact: { sel: '.contact', axis: 'y' }
+  };
+  const SECTION_NAMES = { meny: 'Meny', 'hos-oss': 'Hos oss', 'om-oss': 'Om oss', 'finn-oss': 'Finn oss' };
+
+  function clean(html) {
+    const t = document.createElement('template'); t.innerHTML = html;
+    const out = document.createElement('div');
+    (function walk(src, dst) {
+      for (const n of src.childNodes) {
+        if (n.nodeType === 3) dst.appendChild(document.createTextNode(n.nodeValue));
+        else if (n.nodeType === 1) {
+          const tag = n.tagName, href = n.getAttribute('href') || '';
+          if (tag === 'BR') dst.appendChild(document.createElement('br'));
+          else if (tag === 'SMALL') { const e = document.createElement('small'); walk(n, e); dst.appendChild(e); }
+          else if (tag === 'SPAN' && n.classList.contains('tag')) { const e = document.createElement('span'); e.className = 'tag'; walk(n, e); dst.appendChild(e); }
+          else if (tag === 'A' && /^(tel:|mailto:)/.test(href)) { const e = document.createElement('a'); e.setAttribute('href', href); walk(n, e); dst.appendChild(e); }
+          else walk(n, dst);
+        }
+      }
+    })(t.content, out);
+    return out.innerHTML;
+  }
+
+  const texts = $$(TEXT_SEL).filter(el => !el.parentElement.closest(TEXT_SEL) && !el.closest('a.logo'));
+  const defaults = { text: {}, order: {} };
+  texts.forEach((el, i) => { el.dataset.k = 't' + i; defaults.text['t' + i] = clean(el.innerHTML).trim(); });
+  for (const [name, L] of Object.entries(LISTS)) {
+    const box = $(L.sel); if (!box) continue;
+    box.dataset.list = name;
+    const kids = [...box.children];
+    kids.forEach((c, i) => { c.dataset.mid = name + '-' + i; });
+    defaults.order[name] = kids.map(c => c.dataset.mid);
+  }
+
+  function apply(state) {
+    texts.forEach(el => { const k = el.dataset.k, v = state.text && state.text[k]; el.innerHTML = v != null ? clean(v) : defaults.text[k]; });
+    for (const name of Object.keys(defaults.order)) {
+      const box = $(`[data-list="${name}"]`);
+      const seen = new Set();
+      [...((state.order && state.order[name]) || []), ...defaults.order[name]].forEach(id => {
+        if (seen.has(id)) return; seen.add(id);
+        const el = box.querySelector(`:scope > [data-mid="${id}"]`); if (el) box.appendChild(el);
+      });
+    }
+  }
+  function collect() {
+    const state = { version: VERSION, text: {}, order: {} };
+    texts.forEach(el => { const v = clean(el.innerHTML).trim(); if (v !== defaults.text[el.dataset.k]) state.text[el.dataset.k] = v; });
+    for (const name of Object.keys(defaults.order)) {
+      const ids = [...$(`[data-list="${name}"]`).children].map(c => c.dataset.mid).filter(Boolean);
+      if (ids.join() !== defaults.order[name].join()) state.order[name] = ids;
+    }
+    return state;
+  }
+  let saved = { version: VERSION, text: {}, order: {} };
+  fetch('content.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)
+    .then(s => { if (s && s.version === VERSION) { saved = s; apply(s); } }).catch(() => {});
+
+  let art = null, editing = false, readOnly = false;
+  const toggle = document.createElement('button');
+  toggle.type = 'button'; toggle.className = 'ed-toggle'; toggle.hidden = true;
+  toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Rediger siden';
+  const bar = document.createElement('div');
+  bar.className = 'ed-bar'; bar.hidden = true; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', 'Redigering');
+  bar.innerHTML = '<div class="msg"><strong>Redigeringsmodus</strong><span id="ed-status"></span></div><button type="button" class="b-ghost" id="ed-undo">Forkast</button><button type="button" class="b-save" id="ed-save" disabled>Lagre</button><button type="button" class="b-ghost" id="ed-done">Ferdig</button>';
+  const mv = document.createElement('div'); mv.className = 'mv';
+  mv.innerHTML = '<button type="button" class="grip" aria-label="Dra for å flytte">⠿</button><button type="button" data-step="-1" aria-label="Flytt bakover">↑</button><button type="button" data-step="1" aria-label="Flytt fremover">↓</button>';
+  document.body.append(toggle, bar, mv);
+  const status = $('#ed-status', bar), saveBtn = $('#ed-save', bar);
+  const HELP = 'Klikk på tekst for å endre den. Bruk pilene eller ⠿ for å flytte ting.';
+  const setStatus = (t, c) => { status.textContent = t; status.className = c || ''; };
+  const markDirty = () => { saveBtn.disabled = readOnly; setStatus('Ulagrede endringer', 'dirty'); };
+
+  (async () => {
+    if (!window.claude || !claude.use) return;
+    const [a, u] = await Promise.all([claude.use('artifact'), claude.use('user')]);
+    if (!a) return;
+    let can = true; try { if (u && u.canEdit) can = await u.canEdit(); } catch {}
+    if (can) { art = a; toggle.hidden = false; }
+  })();
+
+  function setEditable(on) {
+    let plain = 'plaintext-only';
+    try { const p = document.createElement('div'); p.contentEditable = plain; if (p.contentEditable !== plain) plain = 'true'; } catch { plain = 'true'; }
+    texts.forEach(el => on ? (el.contentEditable = el.querySelector('br, small, .tag, a') ? 'true' : plain) : el.removeAttribute('contenteditable'));
+  }
+  function sectionTools(on) {
+    $$('.sec-tools').forEach(n => n.remove());
+    if (!on) return;
+    const secs = [...$('[data-list="sections"]').children];
+    secs.forEach((s, i) => {
+      const t = document.createElement('div'); t.className = 'sec-tools';
+      t.innerHTML = `<span>${SECTION_NAMES[s.id] || 'Seksjon'}</span><button type="button" data-dir="-1" aria-label="Flytt seksjonen opp">↑</button><button type="button" data-dir="1" aria-label="Flytt seksjonen ned">↓</button>`;
+      t.querySelector('[data-dir="-1"]').disabled = i === 0;
+      t.querySelector('[data-dir="1"]').disabled = i === secs.length - 1;
+      s.prepend(t);
+    });
+  }
+  function enter() { editing = true; setMenu(false); document.body.classList.add('editing'); bar.hidden = false; setEditable(true); sectionTools(true); dispatchEvent(new Event('scroll')); if (saveBtn.disabled) setStatus(HELP); }
+  function exit() { editing = false; document.body.classList.remove('editing'); bar.hidden = true; hideMv(); setEditable(false); sectionTools(false); dispatchEvent(new Event('scroll')); }
+  toggle.addEventListener('click', enter);
+  $('#ed-done', bar).addEventListener('click', exit);
+  $('#ed-undo', bar).addEventListener('click', () => { apply(saved); saveBtn.disabled = true; sectionTools(true); setStatus('Endringene er forkastet.'); });
+  saveBtn.addEventListener('click', async () => {
+    if (!art) return;
+    const state = collect(); saveBtn.disabled = true; setStatus('Lagrer …');
+    try { await art.publish({ 'content.json': JSON.stringify(state, null, 2) }); saved = state; setStatus('Lagret. Alle som åpner siden ser nå denne versjonen.', 'ok'); }
+    catch (e) {
+      const c = e && e.code;
+      if (c === 'not_writer' || c === 'not_granted') { readOnly = true; setStatus('Du har bare lesetilgang til denne siden, så endringer kan ikke lagres.', 'dirty'); }
+      else if (c === 'conflict') setStatus('Noen andre lagret samtidig. Last inn siden på nytt for å se deres versjon.', 'dirty');
+      else if (c === 'capability_disabled') { readOnly = true; setStatus('Lagring er ikke tilgjengelig i denne visningen.', 'dirty'); }
+      else { setStatus('Kunne ikke lagre (' + ((e && e.message) || 'ukjent feil') + '). Prøv igjen.', 'dirty'); saveBtn.disabled = false; }
+    }
+  });
+  document.addEventListener('input', e => { if (editing && e.target.closest('[data-k]')) markDirty(); });
+  document.addEventListener('paste', e => {
+    if (!editing || !e.target.closest('[contenteditable="true"]')) return;
+    e.preventDefault(); document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain'));
+  });
+  document.addEventListener('keydown', e => { if (editing && e.key === 'Enter' && e.target.closest('[data-k]') && !e.target.closest('[contenteditable="true"]')) { e.preventDefault(); e.target.blur(); } });
+  document.addEventListener('click', e => {
+    if (!editing) return;
+    const a = e.target.closest('a'); if (a && !a.closest('.topbar')) e.preventDefault();
+    const sb = e.target.closest('.sec-tools button');
+    if (sb) {
+      const s = sb.closest('main > section'), dir = +sb.dataset.dir, sib = dir < 0 ? s.previousElementSibling : s.nextElementSibling;
+      if (sib) { dir < 0 ? sib.before(s) : sib.after(s); markDirty(); sectionTools(true); s.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    }
+  }, true);
+
+  let cur = null, hideTimer = 0, dragging = null;
+  const itemFor = n => { const it = n && n.closest && n.closest('[data-mid]'); return it && it.parentElement.dataset.list !== 'sections' ? it : null; };
+  function placeMv(it) {
+    cur = it; const r = it.getBoundingClientRect(), x = LISTS[it.parentElement.dataset.list].axis === 'x';
+    const [prev, next] = mv.querySelectorAll('[data-step]');
+    prev.textContent = x ? '←' : '↑'; next.textContent = x ? '→' : '↓';
+    prev.disabled = !it.previousElementSibling; next.disabled = !it.nextElementSibling;
+    mv.classList.add('show');
+    const w = mv.offsetWidth, h = mv.offsetHeight, top = topbar.getBoundingClientRect().bottom;
+    mv.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.right - w)) + 'px';
+    mv.style.top = (r.top > top + h + 14 ? r.top - h - 6 : Math.max(top + 8, r.top + 6)) + 'px';
+    $$('.is-hover').forEach(n => n.classList.remove('is-hover')); it.classList.add('is-hover');
+  }
+  function hideMv() { mv.classList.remove('show'); cur = null; $$('.is-hover').forEach(n => n.classList.remove('is-hover')); }
+  document.addEventListener('pointerover', e => {
+    if (!editing || dragging) return;
+    clearTimeout(hideTimer);
+    if (mv.contains(e.target)) return;
+    const it = itemFor(e.target);
+    if (it) { if (it !== cur) placeMv(it); } else hideTimer = setTimeout(hideMv, 250);
+  });
+  addEventListener('scroll', () => { if (editing && cur && !dragging) placeMv(cur); }, { passive: true });
+  mv.addEventListener('click', e => {
+    const b = e.target.closest('[data-step]'); if (!b || !cur) return;
+    const sib = +b.dataset.step < 0 ? cur.previousElementSibling : cur.nextElementSibling; if (!sib) return;
+    +b.dataset.step < 0 ? sib.before(cur) : sib.after(cur); markDirty(); placeMv(cur);
+  });
+  const grip = $('.grip', mv);
+  grip.addEventListener('pointerdown', e => { if (!cur) return; e.preventDefault(); dragging = cur; dragging.classList.add('is-dragging'); document.body.classList.add('dragging'); grip.setPointerCapture(e.pointerId); });
+  grip.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const box = dragging.parentElement, x = LISTS[box.dataset.list].axis === 'x';
+    const under = document.elementFromPoint(e.clientX, e.clientY), t = under && under.closest('[data-mid]');
+    if (!t || t === dragging || t.parentElement !== box) return;
+    const r = t.getBoundingClientRect();
+    const before = x ? (e.clientY < r.top || (e.clientY <= r.bottom && e.clientX < r.left + r.width / 2)) : e.clientY < r.top + r.height / 2;
+    if (before && t.previousElementSibling !== dragging) { t.before(dragging); markDirty(); }
+    else if (!before && t.nextElementSibling !== dragging) { t.after(dragging); markDirty(); }
+    placeMv(dragging);
+  });
+  const endDrag = () => { if (!dragging) return; dragging.classList.remove('is-dragging'); document.body.classList.remove('dragging'); const d = dragging; dragging = null; placeMv(d); };
+  grip.addEventListener('pointerup', endDrag); grip.addEventListener('pointercancel', endDrag);
+
+  /* ---- Scroll depth in the hero: texture, beans and photo move at their own speeds ---- */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const hero = $('.hero');
+    const layers = $$('[data-speed]', hero).map(el => ({ el, s: +el.dataset.speed, r: +(el.dataset.spin || 0) }));
+    const heroImg = $('#hero-img');
+    let ticking = false;
+    function frame() {
+      ticking = false;
+      if (editing) { layers.forEach(({ el }) => { el.style.translate = ''; el.style.rotate = ''; }); heroImg.style.translate = ''; return; }
+      const y = scrollY, k = innerWidth < 860 ? 0.55 : 1;
+      if (y > hero.offsetHeight + 200) return;
+      for (const { el, s, r } of layers) { el.style.translate = `0 ${(y * s * k).toFixed(1)}px`; if (r) el.style.rotate = `${(y * r).toFixed(1)}deg`; }
+      heroImg.style.translate = `0 ${Math.min(heroImg.parentElement.offsetHeight * 0.075, y * 0.12 * k).toFixed(1)}px`;
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+    addEventListener('resize', frame);
+    frame();
+  }
+})();
+</script>
+</body></html>
