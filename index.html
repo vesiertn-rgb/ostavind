@@ -36,7 +36,16 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 /* The page canvas (seen when you drag past the edges) matches the dark top and bottom. */
-html { scroll-behavior: smooth; background: var(--espresso); overscroll-behavior-x: none; }
+/* The page canvas shows wherever the browser draws outside the page: behind the
+   Dynamic Island / status bar (above the top) and when you pull past either end.
+   Top: the same dark coffee texture as the hero. Bottom: the footer's shade. */
+html {
+  scroll-behavior: smooth; overscroll-behavior-x: none;
+  background:
+    linear-gradient(rgba(18,11,7,.8), rgba(18,11,7,.8)) 50% -240px / 100% 300px no-repeat,
+    url(img/textur.webp) 50% -240px / auto 300px repeat-x,
+    var(--night);
+}
 body {
   /* Every section paints its own colour; the body stays dark so no white shows at the edges. */
   margin: 0; background: var(--espresso); color: var(--ink);
@@ -341,13 +350,15 @@ footer { background: var(--night); color: var(--on-dark-2); font-size: 15px; ove
   .hours { margin-top: 36px; }
   .bean.f2 { top: 60%; }
   .bean.f3 { top: 93%; }
-  body::before {
-    height: calc(env(safe-area-inset-top, 0px) + 26px); background: rgba(26,17,12,.4);
-    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-    -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
-    opacity: 0; transition: opacity .3s; pointer-events: none;
+  body::before { display: none; } /* Safari draws its own blur under the status bar */
+}
+/* Depth on phones: the texture drifts down at 45% of the scroll speed, so it reads as
+   sitting behind the text. Runs on the compositor where supported, so it doesn't stutter. */
+@supports (animation-timeline: scroll()) {
+  @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+    .hero-bg { animation: bg-depth linear both; animation-timeline: scroll(root); animation-range: 0 1500px; }
+    @keyframes bg-depth { to { transform: translateY(675px); } }
   }
-  html.scrolled body::before { opacity: 1; }
 }
 
 /* The first section sits under the hanging hours band on wide screens. */
@@ -952,12 +963,19 @@ body.dragging .mv { pointer-events: none; }
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const hero = $('.hero');
     const layers = $$('[data-speed]', hero).map(el => ({ el, s: +el.dataset.speed, r: +(el.dataset.spin || 0) }));
-    const heroImg = $('#hero-img');
+    const heroImg = $('#hero-img'), bg = $('.hero-bg', hero);
+    const cssDepth = window.CSS && CSS.supports('animation-timeline: scroll()');
     let ticking = false;
     function frame() {
       ticking = false;
-      /* Phones keep the texture still: scroll-linked movement stutters on mobile browsers. */
-      if (editing || innerWidth <= 760) { layers.forEach(({ el }) => { el.style.translate = ''; el.style.rotate = ''; }); heroImg.style.translate = ''; return; }
+      /* Phones: the texture moves with a CSS scroll timeline (smooth) where the browser
+         supports it, otherwise here at the same 45% speed; beans only float. */
+      if (!editing && innerWidth <= 760) {
+        layers.forEach(({ el }) => { el.style.translate = ''; el.style.rotate = ''; });
+        if (!cssDepth) bg.style.translate = `0 ${(Math.min(scrollY, 1500) * 0.45).toFixed(1)}px`;
+        return;
+      }
+      if (editing) { layers.forEach(({ el }) => { el.style.translate = ''; el.style.rotate = ''; }); heroImg.style.translate = ''; return; }
       const y = scrollY, k = innerWidth < 860 ? 0.55 : 1;
       if (y > hero.offsetHeight + 200) return;
       for (const { el, s, r } of layers) { el.style.translate = `0 ${(y * s * k).toFixed(1)}px`; if (r) el.style.rotate = `${(y * r).toFixed(1)}deg`; }
