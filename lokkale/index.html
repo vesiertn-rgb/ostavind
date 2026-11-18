@@ -156,7 +156,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 }
 .arch img { width: 100%; height: 100%; object-fit: cover; object-position: 63% 50%; transform: scale(1.04); transition: transform 1.6s cubic-bezier(.2, .8, .2, 1); }
 .hero-art:hover .arch img { transform: scale(1.07); }
-.hero-art .arch { background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
+.hero-art .arch { aspect-ratio: 292 / 238; background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
 .arch .hero-draw { display: block; width: 100%; height: 100%; color: var(--red); overflow: visible; }
 .hero-art:hover .boil { animation: boil .3s steps(1, end) infinite; }
 .hero-cup {
@@ -434,17 +434,15 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       <p class="moved"><svg aria-hidden="true"><use href="#i-ast"/></svg><span><b>Sesong</b> har flyttet til Eidsiva gate 7 og heter nå Lokkale</span></p>
     </div>
     <div class="hero-art">
-      <div class="arch"><svg class="hero-draw" viewBox="74 96 292 298" role="img" aria-label="Tegning av en mokkakanne, en kopp kaffe og kaffebønner"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="arch"><svg class="hero-draw" viewBox="74 96 292 238" role="img" aria-label="Tegning av en mokkakanne, en kopp kaffe og kaffebønner"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="170" cy="152" r="6"/><path d="M126 170q44-20 88 0"/>
         <path d="M126 170l14 66h60l14-66"/><path d="M214 170l26-9-19 27"/><path d="M128 182c-36 3-36 48 10 50"/>
         <path d="M134 236h72v11h-72z"/><path d="M140 247l-20 84h100l-20-84"/><path d="M170 172v64M170 247v84" stroke-width="2.2"/>
         <path d="M250 146c-6-8 6-12 0-22M264 152c-6-8 6-12 0-22"/>
-        <path d="M248 284h80v12a40 36 0 0 1-80 0z"/><path d="M328 292h6a11 11 0 0 1 0 22h-10"/><ellipse cx="288" cy="331" rx="52" ry="8"/>
+        <g transform="translate(0 -8)"><path d="M248 284h80v12a40 36 0 0 1-80 0z"/><path d="M328 292h6a11 11 0 0 1 0 22h-10"/><ellipse cx="288" cy="331" rx="52" ry="8"/>
         <path d="M259 296c5-5 9 5 14 0s9 5 14 0 9 5 14 0 9 5 14 0" stroke-width="2.4"/>
-        <path d="M272 268c-7-8 7-12 0-22M288 264c-7-8 7-12 0-22M304 268c-7-8 7-12 0-22"/>
+        <path d="M272 268c-7-8 7-12 0-22M288 264c-7-8 7-12 0-22M304 268c-7-8 7-12 0-22"/></g>
         <path d="M84 342c90-7 190-7 272 0"/>
-        <g fill="currentColor" stroke="none"><ellipse cx="118" cy="372" rx="13" ry="8.5" transform="rotate(-22 118 372)"/><ellipse cx="154" cy="390" rx="11" ry="7.5" transform="rotate(16 154 390)"/><ellipse cx="236" cy="380" rx="12" ry="8" transform="rotate(-8 236 380)"/><ellipse cx="300" cy="374" rx="13" ry="8.5" transform="rotate(20 300 374)"/><ellipse cx="332" cy="394" rx="10" ry="7" transform="rotate(-30 332 394)"/></g>
-        <g style="stroke:var(--beige)" stroke-width="2"><path d="M108 377c6-3 13-7 20-10"/><path d="M146 386c5 2 11 4 16 7"/><path d="M225 381c7 0 15-1 22-2"/><path d="M290 370c6 3 13 6 20 9"/><path d="M325 398c5-3 10-5 14-8"/></g>
       </g></g></svg></div>
       <svg class="hero-ast a" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-ast"/></svg>
       <svg class="hero-ast b" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-ast"/></svg>
