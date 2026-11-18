@@ -156,7 +156,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 }
 .arch img { width: 100%; height: 100%; object-fit: cover; object-position: 63% 50%; transform: scale(1.04); transition: transform 1.6s cubic-bezier(.2, .8, .2, 1); }
 .hero-art:hover .arch img { transform: scale(1.07); }
-.hero-art .arch { aspect-ratio: 292 / 238; background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
+.hero-art .arch { aspect-ratio: 292 / 214; background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
 .arch .hero-draw { display: block; width: 100%; height: 100%; color: var(--red); overflow: visible; }
 .hero-art:hover .boil { animation: boil .3s steps(1, end) infinite; }
 .hero-cup {
@@ -394,7 +394,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/></g><circle cx="17.3" cy="6.7" r="1.25" fill="currentColor"/></symbol>
   <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M13.4 21.5v-8h2.7l.4-3.1h-3.1V8.4c0-.9.3-1.5 1.6-1.5h1.7V4.1c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.3H7.6v3.1h2.7v8h3.1z"/></symbol>
 </svg>
-<div class="strip"><div class="wrap strip-in"><svg aria-hidden="true"><use href="#i-ast"/></svg><span><span class="hide-xxs">Hverdager </span>07.30–17.00</span><span class="sep" aria-hidden="true"></span><span>Helg 10.00–16.00</span><svg aria-hidden="true"><use href="#i-ast"/></svg></div></div>
+<div class="strip"><div class="wrap strip-in"><span><span class="hide-xxs">Hverdager </span>07.30–17.00</span><span class="sep" aria-hidden="true"></span><span>Helg 10.00–16.00</span></div></div>
 <header class="bar" id="bar">
   <div class="wrap bar-in">
     <a class="brand" href="#top" aria-label="Lokkale, til forsiden"><svg class="logo" viewBox="6 6 641 150" aria-hidden="true"><use href="#logo"/></svg></a>
@@ -431,21 +431,18 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
         <a class="btn btn-red" href="meny.html">Se menyen<svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></a>
         <a class="link" href="https://maps.google.com/?q=Eidsiva+gate+7,+2080+Eidsvoll" target="_blank" rel="noopener">Finn oss<svg aria-hidden="true"><use href="#arrow"/></svg></a>
       </div>
-      <p class="moved"><svg aria-hidden="true"><use href="#i-ast"/></svg><span><b>Sesong</b> har flyttet til Eidsiva gate 7 og heter nå Lokkale</span></p>
+      <p class="moved"><span><b>Sesong</b> har flyttet til Eidsiva gate 7 og heter nå Lokkale</span></p>
     </div>
     <div class="hero-art">
-      <div class="arch"><svg class="hero-draw" viewBox="74 96 292 238" role="img" aria-label="Tegning av en mokkakanne, en kopp kaffe og kaffebønner"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="arch"><svg class="hero-draw" viewBox="74 120 292 214" role="img" aria-label="Tegning av en mokkakanne, en kopp kaffe og kaffebønner"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="170" cy="152" r="6"/><path d="M126 170q44-20 88 0"/>
         <path d="M126 170l14 66h60l14-66"/><path d="M214 170l26-9-19 27"/><path d="M128 182c-36 3-36 48 10 50"/>
         <path d="M134 236h72v11h-72z"/><path d="M140 247l-20 84h100l-20-84"/><path d="M170 172v64M170 247v84" stroke-width="2.2"/>
-        <path d="M250 146c-6-8 6-12 0-22M264 152c-6-8 6-12 0-22"/>
         <g transform="translate(0 -8)"><path d="M248 284h80v12a40 36 0 0 1-80 0z"/><path d="M328 292h6a11 11 0 0 1 0 22h-10"/><ellipse cx="288" cy="331" rx="52" ry="8"/>
         <path d="M259 296c5-5 9 5 14 0s9 5 14 0 9 5 14 0 9 5 14 0" stroke-width="2.4"/>
         <path d="M272 268c-7-8 7-12 0-22M288 264c-7-8 7-12 0-22M304 268c-7-8 7-12 0-22"/></g>
         <path d="M84 342c90-7 190-7 272 0"/>
       </g></g></svg></div>
-      <svg class="hero-ast a" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-ast"/></svg>
-      <svg class="hero-ast b" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-ast"/></svg>
     </div>
   </div>
 </section>
@@ -467,7 +464,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 <section class="tiles-sec" aria-labelledby="t-h">
   <div class="wrap" id="hva">
     <p class="eyebrow"><span>Menyen <span class="dim">· konsept</span></span></p>
-    <h2 id="t-h">Hva frister?</h2>
+    <h2 id="t-h">Menyen vår</h2>
     <ul class="tiles">
       <li class="lift" style="--i:0"><a href="meny.html#kaffe"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><g class="boil"><use href="#i-cup"/></g></svg><span class="t-foot"><span class="t-name">Kaffe</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
       <li class="lift" style="--i:1"><a href="meny.html#vin"><svg class="ill tall" viewBox="0 0 80 152" aria-hidden="true"><g class="boil"><use href="#i-wine"/></g></svg><span class="t-foot"><span class="t-name">Vin</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
@@ -481,9 +478,6 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       <use href="#i-bottle" x="150" y="26" width="57" height="180"/>
       <use href="#i-wine" x="224" y="78" width="72" height="137"/>
       <use href="#i-cup" x="298" y="100" width="130" height="104"/>
-      <use href="#i-ast" x="100" y="48" width="26" height="26"/>
-      <use href="#i-ast" x="424" y="30" width="30" height="30"/>
-      <use href="#i-ast" x="458" y="80" width="16" height="16"/>
       <path d="M92 204c100-7 240-7 340 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" filter="url(#pencil)"/>
     </g></svg>
   </div>
@@ -499,7 +493,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
         <p class="body">Eidsvoll er et historisk sted, hvor grunnloven ble underskrevet. Nå ønsker vi å skape nye historier rundt bordet, gjennom mat og drikke.</p>
       </div>
     </div>
-    <blockquote class="pull lift"><svg aria-hidden="true"><use href="#i-ast"/></svg><p>«Vi ønsker å skape et sted der folk trives, senker skuldrene og har lyst til å komme tilbake.»</p></blockquote>
+    <blockquote class="pull lift"><p>«Vi ønsker å skape et sted der folk trives, senker skuldrene og har lyst til å komme tilbake.»</p></blockquote>
   </div>
 </section>
 </main>
