@@ -37,9 +37,10 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { background: var(--cream); scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 24px); -webkit-text-size-adjust: 100%; }
+html { background: var(--red); /* shows past the page edges on phones: red under the footer, red above the hours strip */
+   scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 24px); -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; background: var(--cream); color: var(--ink);
+  margin: 0; min-height: 100vh; background: var(--cream); color: var(--ink);
   font: 400 clamp(17px, 1.1vw, 19px)/1.6 var(--serif); font-variation-settings: "SOFT" 50;
   -webkit-font-smoothing: antialiased; overflow-x: clip;
 }
