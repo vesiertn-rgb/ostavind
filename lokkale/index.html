@@ -40,10 +40,11 @@
 html { background: var(--red); /* shows past the page edges on phones: red under the footer, red above the hours strip */
    scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 24px); -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; min-height: 100vh; background: var(--cream); color: var(--ink);
+  margin: 0; min-height: 100vh; background: var(--red); color: var(--ink); /* red body so Safari tints its bars and overscroll red; content sits on cream in main */
   font: 400 clamp(17px, 1.1vw, 19px)/1.6 var(--serif); font-variation-settings: "SOFT" 50;
   -webkit-font-smoothing: antialiased; overflow-x: clip;
 }
+main { display: block; background: var(--cream); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--cream); }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
