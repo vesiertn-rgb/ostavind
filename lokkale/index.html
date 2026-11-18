@@ -156,6 +156,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 }
 .arch img { width: 100%; height: 100%; object-fit: cover; object-position: 63% 50%; transform: scale(1.04); transition: transform 1.6s cubic-bezier(.2, .8, .2, 1); }
 .hero-art:hover .arch img { transform: scale(1.07); }
+.hero-art .arch { background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
 .arch .hero-draw { display: block; width: 100%; height: 100%; color: var(--red); overflow: visible; }
 .hero-art:hover .boil { animation: boil .3s steps(1, end) infinite; }
 .hero-cup {
