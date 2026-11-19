@@ -2,7 +2,7 @@
 <html lang="nb">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover">
 <title>Menyen – Lokkale</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Et konsept for menyen til Lokkale, kafé og vinbar i Sundet i Eidsvoll.">
@@ -37,7 +37,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { background: var(--red); /* shows past the page edges on phones: red under the footer, red above the hours strip */
+html { overflow-x: clip; background: var(--red); /* shows past the page edges on phones: red under the footer, red above the hours strip */
    scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 24px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; min-height: 100vh; background: var(--red); color: var(--ink); /* red body so Safari tints its bars and overscroll red; content sits on cream in main */
