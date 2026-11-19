@@ -45,7 +45,9 @@ body {
   -webkit-font-smoothing: antialiased; overflow-x: clip;
 }
 main { display: block; background: var(--cream); }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--cream); }
+/* Pinned to the top edge and never zero-height, so Safari always has this element to take its top tint from.
+   It is red over the red strip and cream over the cream bar, so it never shows as a line. */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: max(env(safe-area-inset-top, 0px), 3px); z-index: 60; background: var(--cream); transition: background-color .2s; }
 /* while the red hours strip touches the top of the screen, the status bar area is red too */
 .at-top body::before { background: var(--red); }
 /* Safari tints the status bar from a sticky element at the top edge. While the strip is showing, the bar is not sticky,
