@@ -48,6 +48,9 @@ main { display: block; background: var(--cream); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--cream); }
 /* while the red hours strip touches the top of the screen, the status bar area is red too */
 .at-top body::before { background: var(--red); }
+/* Safari tints the status bar from a sticky element at the top edge. While the strip is showing, the bar is not sticky,
+   so Safari has nothing cream to sample and goes back to red. It becomes sticky again the moment the strip scrolls away. */
+.at-top .bar { position: relative; top: 0; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 [hidden] { display: none !important; }
