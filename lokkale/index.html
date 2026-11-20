@@ -12,16 +12,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Sans:wght@400..700&display=swap">
 <style>
 /* Lokkale, second concept: Café Maud's site structure in Lokkale's own red and cream.
-   Layout: an hours strip; a sticky cream bar with the logo left, short nav and one red button;
-   a split hero (headline left, arched photo right); three captioned squares; four category tiles;
-   a pencil-drawn pause; a split story with a pull quote; a red footer that hands over to the logo.
-   The menu lives on its own page with category squares, like Café Maud's. One look in light and dark. */
+   One page: an hours strip; a sticky cream bar with the logo, short nav and one red button; a split hero
+   (headline left, a pencil drawing right); the whole menu on a beige band, closed by a drawn pause;
+   a split story with a pull quote; a red footer that says goodbye.
+   Motion keeps to three rules, and all of it stops for reduced motion:
+   1. text stands up into place once, the first time you reach it (it is visible the whole time);
+   2. drawings are cut-out sheets at different depths that turn a little as you scroll past them
+      and lean toward the pointer on desktop;
+   3. the photo sits a little deeper than its frame. */
 :root {
   --red: #CC3C20;       /* the logo's red: headings, buttons, drawings */
   --red-deep: #A82D16;  /* hover and pressed */
   --cream: #FEFBF6;     /* page */
-  --beige: #F4E8D8;     /* bands, tiles, notes */
-  --beige-2: #EAD8C2;   /* image wells */
+  --beige: #F4E8D8;     /* bands, notes */
+  --beige-2: #EAD8C2;   /* image wells, hover on beige */
   --ink: #2B0C06;       /* text */
   --ink-2: #6E4033;     /* quieter text */
   --line: rgba(43, 12, 6, .14);
@@ -33,6 +37,9 @@
   --bar-h: clamp(64px, 6vw, 82px);
   --r: clamp(16px, 1.6vw, 24px);
   --pad: clamp(72px, 9vw, 136px);
+  --ease: cubic-bezier(.2, .8, .2, 1);       /* hovers */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);   /* arrivals: a quick start and a long, soft landing */
+  --spring: cubic-bezier(.34, 1.5, .64, 1);  /* letting go after a press */
   color-scheme: light;
 }
 
@@ -55,8 +62,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: max(env(sa
 .at-top .bar { position: relative; top: 0; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
+a, button { -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
 svg.logo, svg.ill { display: block; overflow: visible; color: var(--red); }
 svg.logo { height: auto; }
@@ -75,27 +82,26 @@ h2 { font-size: clamp(36px, 4.2vw, 64px); line-height: 1; font-weight: 650; lett
 h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "SOFT" 100, "WONK" 1; }
 .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; font: 600 12.5px/1.2 var(--ui); letter-spacing: .18em; text-transform: uppercase; color: var(--red); }
 .eyebrow svg { width: 14px; height: 14px; flex: none; }
-.eyebrow .dim { color: var(--ink-2); }
 
 /* ---------- buttons and links ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 24px;
   border-radius: 999px; font: 600 15.5px/1 var(--ui); text-decoration: none; white-space: nowrap;
-  transition: background .2s, color .2s, border-color .2s;
+  transition: background-color .25s var(--ease), color .25s var(--ease), transform .5s var(--spring);
 }
-.btn svg { width: 14px; height: 14px; flex: none; transition: transform .25s; }
+.btn svg { width: 14px; height: 14px; flex: none; transition: transform .35s var(--ease); }
 .btn:hover svg.go-r { transform: translateX(3px); }
 .btn:hover svg.go-ne { transform: translate(2px, -2px); }
 .btn-red { background: var(--red); color: var(--on-red); }
 .btn-red:hover { background: var(--red-deep); }
-.btn-line { border: 1.5px solid var(--red); color: var(--red); }
-.btn-line:hover { background: var(--red); color: var(--on-red); }
 .link {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 0 6px; border-bottom: 1.5px solid currentColor;
-  font: 600 15.5px/1 var(--ui); color: var(--red); text-decoration: none; white-space: nowrap;
+  font: 600 15.5px/1 var(--ui); color: var(--red); text-decoration: none; white-space: nowrap; transition: transform .5s var(--spring);
 }
-.link svg { width: 12px; height: 12px; transition: transform .25s; }
+.link svg { width: 12px; height: 12px; transition: transform .35s var(--ease); }
 .link:hover svg { transform: translate(2px, -2px); }
+/* everything you can tap gives a little under the finger and springs back */
+.btn:active, .link:active, .soc a:active, .burger:active, .drawer-x:active { transform: scale(.96); transition-duration: .12s; }
 
 /* ---------- hours strip ---------- */
 .strip { background: var(--red); color: var(--on-red); }
@@ -103,24 +109,24 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   display: flex; justify-content: center; align-items: center; gap: 14px; min-height: 38px; padding-block: 9px;
   font: 600 11.5px/1.2 var(--ui); letter-spacing: .18em; text-transform: uppercase; text-align: center;
 }
-.strip svg { width: 11px; height: 11px; flex: none; }
 .strip .sep { width: 22px; height: 1px; background: currentColor; opacity: .55; }
-@media (max-width: 480px) { .strip-in { gap: 10px; font-size: 10.5px; letter-spacing: .12em; } .strip svg { display: none; } .strip .sep { width: 14px; } }
+@media (max-width: 480px) { .strip-in { gap: 10px; font-size: 10.5px; letter-spacing: .12em; } .strip .sep { width: 14px; } }
 @media (max-width: 360px) { .strip .hide-xxs { display: none; } }
 
 /* ---------- bar ---------- */
-.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: var(--cream); border-bottom: 1px solid var(--line); transition: box-shadow .3s; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: var(--cream); border-bottom: 1px solid var(--line); transition: box-shadow .4s var(--ease); }
 .bar.lifted { box-shadow: 0 14px 30px -24px rgba(43, 12, 6, .55); }
 .bar-in { display: flex; align-items: center; gap: clamp(16px, 3vw, 44px); height: var(--bar-h); }
 .brand { flex: none; display: block; width: clamp(112px, 9.6vw, 142px); }
 .brand svg { width: 100%; }
 .nav { display: flex; gap: clamp(22px, 2.8vw, 40px); margin-left: auto; font: 600 15px/1 var(--ui); }
-.nav a { position: relative; padding: 10px 0; text-decoration: none; color: var(--ink); transition: color .2s; }
-.nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 3px; height: 2px; border-radius: 2px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
-.nav a:hover, .nav a[aria-current="page"] { color: var(--red); }
-.nav a:hover::after, .nav a[aria-current="page"]::after { transform: scaleX(1); }
+.nav a { position: relative; padding: 10px 0; text-decoration: none; color: var(--ink); transition: color .25s var(--ease); }
+/* the underline draws in from the left and leaves to the right; it also stays under the section you are reading */
+.nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 3px; height: 2px; border-radius: 2px; background: var(--red); transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease); }
+.nav a:hover, .nav a[aria-current] { color: var(--red); }
+.nav a:hover::after, .nav a[aria-current]::after { transform: scaleX(1); transform-origin: left; }
 .bar-cta { flex: none; }
-.burger { display: none; flex: none; width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--beige); color: var(--red); cursor: pointer; place-items: center; }
+.burger { display: none; flex: none; width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--beige); color: var(--red); cursor: pointer; place-items: center; transition: background-color .25s var(--ease), transform .5s var(--spring); }
 .burger svg { width: 20px; height: 20px; }
 @media (max-width: 860px) {
   .nav { display: none; }
@@ -128,21 +134,28 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   .burger { display: grid; }
 }
 @media (max-width: 359px) { .bar-cta { display: none; } .burger { margin-left: auto; } }
+@media (hover: hover) { .burger:hover, .drawer-x:hover { background: var(--beige-2); } }
 
+/* the phone menu glides in, and its links follow one after another */
 .drawer {
   position: fixed; inset: 0; z-index: 70; display: flex; flex-direction: column; overflow-y: auto; background: var(--cream);
   padding: calc(env(safe-area-inset-top, 0px) + 9px) max(var(--gutter), env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 28px) max(var(--gutter), env(safe-area-inset-left, 0px));
+  opacity: 0; transform: translate3d(0, -14px, 0); transition: opacity .28s var(--ease), transform .5s var(--ease-out);
 }
+.drawer.open { opacity: 1; transform: none; }
 .drawer-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 46px; }
 .drawer .brand { width: 112px; }
-.drawer-x { width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--beige); color: var(--red); cursor: pointer; display: grid; place-items: center; }
+.drawer-x { width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--beige); color: var(--red); cursor: pointer; display: grid; place-items: center; transition: background-color .25s var(--ease), transform .5s var(--spring); }
 .drawer-x svg { width: 18px; height: 18px; }
 .drawer nav { display: grid; margin-top: clamp(36px, 8vh, 72px); }
 .drawer nav a {
   padding: 10px 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--red);
   font: 650 clamp(36px, 10vw, 52px)/1.08 var(--serif); font-variation-settings: "SOFT" 100; letter-spacing: -.02em;
 }
-.drawer .btn { align-self: flex-start; margin-top: 32px; }
+.drawer > .btn { align-self: flex-start; margin-top: 32px; }
+.drawer nav a, .drawer > .btn { transform: translate3d(0, 24px, 0); transition: transform .7s var(--ease-out), background-color .25s var(--ease); }
+.drawer.open nav a, .drawer.open > .btn { transform: none; transition-delay: calc(80ms + var(--i, 0) * 60ms), 0s; }
+.drawer.open > .btn:active { transform: scale(.96); transition: transform .12s; }
 
 /* ---------- hero ---------- */
 .hero { padding-block: clamp(32px, 4.4vw, 80px) var(--pad); }
@@ -155,77 +168,52 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   display: flex; align-items: flex-start; gap: 12px; max-width: 31em; margin: clamp(28px, 2.8vw, 44px) 0 0; padding: 15px 20px 15px 16px;
   border-radius: 16px; background: var(--beige); font: 500 15px/1.45 var(--ui); color: var(--ink);
 }
-.moved svg { width: 16px; height: 16px; flex: none; margin-top: 2px; color: var(--red); }
 .moved b { color: var(--red); font-weight: 700; }
 .hero-art { position: relative; min-width: 0; }
-.arch {
-  position: relative; aspect-ratio: 4 / 4.7; max-width: 100%; overflow: hidden; background: var(--beige);
-  border-radius: 50% 50% var(--r) var(--r) / 42.55% 42.55% var(--r) var(--r);
-}
-.arch img { width: 100%; height: 100%; object-fit: cover; object-position: 63% 50%; transform: scale(1.04); transition: transform 1.6s cubic-bezier(.2, .8, .2, 1); }
-.hero-art:hover .arch img { transform: scale(1.07); }
-.hero-art .arch { aspect-ratio: 292 / 214; background: none; border-radius: 0; overflow: visible; } /* the drawing stands on its own, no box behind it */
-.arch .hero-draw { display: block; width: 100%; height: 100%; color: var(--red); overflow: visible; }
-.hero-art:hover .boil { animation: boil .3s steps(1, end) infinite; }
-.hero-cup {
-  position: absolute; left: clamp(-60px, -3.6vw, -18px); bottom: clamp(26px, 4.4vw, 64px); width: clamp(118px, 12.6vw, 186px); aspect-ratio: 1;
-  display: grid; place-items: center; border-radius: 50%; background: var(--cream); transform: rotate(-8deg);
-  box-shadow: 0 22px 40px -26px rgba(43, 12, 6, .6);
-}
-.hero-cup svg { width: 66%; height: auto; }
-.hero-ast { position: absolute; width: clamp(20px, 2vw, 30px); color: var(--red); }
-.hero-ast.a { right: 2%; top: 6%; }
-.hero-ast.b { right: -3%; top: 17%; width: clamp(13px, 1.2vw, 18px); }
 @media (max-width: 860px) {
   .hero-in { grid-template-columns: minmax(0, 1fr); }
   .hero h1 { font-size: clamp(46px, 9vw, 76px); }
   .hero-art { width: 100%; max-width: 520px; margin: 0 auto; }
-  .arch { aspect-ratio: 1 / 1.05; border-radius: 50% 50% var(--r) var(--r) / 47.6% 47.6% var(--r) var(--r); }
-  .hero-cup { left: -4px; }
-  .hero-ast.b { right: 0; }
 }
 
-/* ---------- on the table ---------- */
-.table { background: var(--beige); padding-block: var(--pad); }
-.sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 22px 40px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 56px); }
-.sec-head > div { min-width: 0; }
-.squares { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); }
-.squares li { min-width: 0; }
-.squares figure { margin: 0; }
-.sq { aspect-ratio: 1; max-width: 100%; overflow: hidden; border-radius: var(--r); background: var(--beige-2); }
-.sq img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
-.squares li:hover .sq img { transform: scale(1.04); }
-.squares figcaption { margin-top: 14px; font: italic 400 clamp(18px, 1.45vw, 22px)/1.25 var(--serif); font-variation-settings: "SOFT" 100, "WONK" 1; color: var(--ink); }
-@media (max-width: 700px) { .squares { grid-template-columns: repeat(2, minmax(0, 1fr)); } .squares li:first-child { grid-column: 1 / -1; } }
-
-/* ---------- category tiles ---------- */
-.tiles-sec { background: var(--beige); padding-block: var(--pad) 0; } /* the menu sits on a beige band */
-.tiles { list-style: none; margin: clamp(32px, 4vw, 54px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); }
-.tiles li { min-width: 0; }
-.tiles a {
-  display: flex; flex-direction: column; justify-content: space-between; gap: 30px; height: 100%; min-height: clamp(210px, 19vw, 290px);
-  padding: clamp(20px, 2vw, 30px); border-radius: var(--r); background: var(--beige); color: var(--red); text-decoration: none;
-  transition: background .25s, color .25s, transform .3s cubic-bezier(.2, .8, .2, 1);
+/* ---------- drawings in depth ---------- */
+/* A drawing is a stack of transparent sheets (.ly) in one 3D scene. Each sheet is moved toward you by --z px and shrunk
+   by just as much, so seen straight on the drawing is exactly as drawn; when the scene turns, the nearer sheets slide
+   further than the ones behind them. site.js writes --t (scroll: 1 just below the screen, 0 in the middle, -1 just above)
+   and --px, --py (pointer, -1 to 1). Without those the drawings simply sit still. */
+/* The moving values are registered as numbers that do not inherit, so a change restyles only the element that uses it. */
+@property --t { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --px { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --py { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --q { syntax: "<number>"; inherits: false; initial-value: 1; }
+.hero-stage, .pause-stage { perspective: calc(var(--P) * 1px); perspective-origin: 50% var(--oy); color: var(--red); }
+.hero-stage { --P: 1100; --oy: 92%; aspect-ratio: 292 / 214; }
+.stage, .scene { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.scene { will-change: transform; }
+.ly {
+  position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+  transform-origin: 50% var(--oy); transform: translateZ(calc(var(--z, 0) * 1px)) scale(calc(1 - var(--z, 0) / var(--P)));
 }
-.tiles a:hover { background: var(--beige-2); transform: translateY(-3px); } /* same hover as the menu squares */
-.tiles svg.ill { width: auto; height: clamp(62px, 6vw, 92px); align-self: flex-start; color: inherit; }
-.tiles svg.ill.tall { height: clamp(84px, 8vw, 122px); margin-top: -10px; }
-.t-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.t-name { font: 650 clamp(26px, 2.3vw, 36px)/1 var(--serif); font-variation-settings: "SOFT" 100; letter-spacing: -.015em; }
-.t-foot svg { width: 20px; height: 20px; flex: none; transition: transform .25s; }
-.tiles a:hover .t-foot svg { transform: translateX(4px); }
-@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) {
-  .tiles { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .tiles a { flex-direction: row; align-items: center; gap: 18px; min-height: 0; padding: 14px 20px 14px 16px; }
-  .tiles svg.ill { width: 64px; height: 52px; align-self: center; }
-  .tiles svg.ill.tall { height: 58px; margin-top: 0; }
-  .t-foot { flex: 1; min-width: 0; }
-  .t-name { font-size: 26px; }
+.hero .scene {
+  transform: translate3d(0, calc(var(--t, 0) * -18px), 0)
+    rotateX(calc(var(--t, 0) * 3deg - var(--py, 0) * 5deg))
+    rotateY(calc(var(--t, 0) * -12deg + var(--px, 0) * 11deg));
+}
+/* when the page opens, the hero drawing swings round to face you while its sheets close up */
+.stage { animation: stage-in 1.9s var(--ease-out) .15s backwards; }
+.stage .ly { animation: sheets-in 1.9s var(--ease-out) .15s backwards; }
+@keyframes stage-in { from { transform: rotateX(9deg) rotateY(-24deg); } to { transform: rotateX(0deg) rotateY(0deg); } }
+@keyframes sheets-in {
+  from { transform: translateZ(calc(var(--z, 0) * 2.6px)) scale(calc(1 - var(--z, 0) / var(--P))); }
+  to { transform: translateZ(calc(var(--z, 0) * 1px)) scale(calc(1 - var(--z, 0) / var(--P))); }
 }
 
-/* line boil: while you point at a drawing it redraws itself ten times a second, like hand-drawn animation */
-.tiles a:hover .boil, .tiles a:focus-visible .boil, .pause svg:hover .boil { animation: boil .3s steps(1, end) infinite; }
+/* line boil: while you point at a drawing it redraws itself ten times a second, like hand-drawn animation.
+   Only where there is a real pointer, so a tap on a phone never leaves it running; there a tap boils it for a moment. */
+@media (hover: hover) {
+  .hero-stage:hover .boil, .pause-stage:hover .boil, .m-cat-head:hover .boil, .foot-ill:hover .boil { animation: boil .3s steps(1, end) infinite; }
+}
+.boiling .boil { animation: boil .3s steps(1, end) infinite; }
 @keyframes boil {
   0% { filter: url(#boil-a); }
   33.333% { filter: url(#boil-b); }
@@ -233,86 +221,14 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   100% { filter: url(#boil-a); }
 }
 
-/* ---------- pause ---------- */
-.pause { display: flex; justify-content: center; padding-block: clamp(64px, 8vw, 120px) clamp(56px, 7vw, 108px); }
-.pause svg { width: clamp(260px, 36vw, 480px); height: auto; overflow: visible; color: var(--red); }
-
-/* ---------- story ---------- */
-.about { background: var(--cream); padding-block: var(--pad); } /* cream, so it stands apart from the beige menu */
-.about-in { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1fr); gap: clamp(36px, 6.5vw, 116px); align-items: center; }
-.about-photo { margin: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border-radius: var(--r); background: var(--beige-2); }
-.about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-.about-txt { min-width: 0; }
-.about-txt .body { max-width: 34ch; margin: clamp(22px, 2.2vw, 30px) 0 0; font-size: clamp(18px, 1.35vw, 21px); color: var(--ink-2); }
-.pull { position: relative; margin: clamp(64px, 8vw, 120px) 0 0; text-align: center; }
-.pull p {
-  max-width: 23ch; margin: 0 auto; font: italic 400 clamp(28px, 3.3vw, 50px)/1.18 var(--serif); font-variation-settings: "SOFT" 100, "WONK" 1;
-  letter-spacing: -.015em; color: var(--red); text-wrap: balance;
-}
-.pull svg { width: clamp(22px, 2.2vw, 32px); margin: 0 auto 22px; color: var(--red); }
-@media (max-width: 860px) { .about-in { grid-template-columns: minmax(0, 1fr); } .about-photo { aspect-ratio: 5 / 4; } .about-photo img { object-position: 50% 68%; } }
-
-/* ---------- menu page ---------- */
-/* The header draws above the category squares, so the stamp's soft shadow is never hidden under them. */
-.m-hero { position: relative; z-index: 1; padding-block: clamp(44px, 6.5vw, 104px) 0; }
-.m-hero-in { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px 56px; align-items: end; }
-.m-hero-in > div { min-width: 0; }
-.m-hero h1 { font-size: clamp(66px, 11vw, 180px); line-height: .84; letter-spacing: -.04em; padding-bottom: .24em; } /* room for the y's tail, so the squares sit just under it */
-.stamp { width: clamp(104px, 12vw, 172px); margin-bottom: 26px; pointer-events: none; color: var(--red); transform: rotate(10deg); filter: drop-shadow(0 12px 16px rgba(43, 12, 6, .18)); }
-.stamp .ring { transform-origin: 100px 100px; animation: spin 48s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (max-width: 640px) {
-  .m-hero-in { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "e e" "h s"; align-items: center; gap: 0 10px; }
-  .m-hero-in > div { display: contents; }
-  .m-hero .eyebrow { grid-area: e; }
-  .m-hero h1 { grid-area: h; }
-  .stamp { grid-area: s; width: 88px; margin-bottom: 0; filter: drop-shadow(0 5px 7px rgba(43, 12, 6, .16)); }
-}
-@media (max-width: 360px) { .m-hero h1 { font-size: 56px; } .stamp { width: 72px; } }
-@media (max-width: 340px) { .m-hero .eyebrow { font-size: 12px; letter-spacing: .13em; } }
-
-/* Category picker: five squares of the same size, styled like the "Hva frister?" tiles. The drawings boil while pointed at. */
-.m-filter { padding-top: 12px; }
-.kats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 20px); }
-.kat {
-  container-type: inline-size; display: grid; aspect-ratio: 1; min-width: 0; margin: 0; padding: 0; border: 0; border-radius: var(--r);
-  background: var(--beige); color: var(--red); font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: background .25s, color .25s, transform .3s cubic-bezier(.2, .8, .2, 1);
-}
-.kat-in { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; min-width: 0; padding: 18px; padding: 10cqi; }
-.kat svg.ill { width: auto; height: 30cqi; color: inherit; }
-.kat svg.ill.tall { height: 40cqi; margin-top: -5cqi; }
-.kat-n { font: 650 20px/1 var(--serif); font-size: 15cqi; font-variation-settings: "SOFT" 100; letter-spacing: -.015em; }
-.kat[aria-pressed="true"] { background: var(--red); color: var(--on-red); }
-.kat:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-@media (hover: hover) {
-  .kat:hover { transform: translateY(-3px); }
-  .kat[aria-pressed="false"]:hover { background: var(--beige-2); }
-  .kat:hover .boil { animation: boil .3s steps(1, end) infinite; }
-}
-.kat:focus-visible .boil, .kat.boiling .boil { animation: boil .3s steps(1, end) infinite; }
-/* Phones: the squares keep a readable size and the row scrolls sideways */
-@media (max-width: 540px) {
-  .m-filter { padding-top: 6px; }
-  .m-filter .wrap { padding-left: 0; padding-right: 0; }
-  .kats {
-    display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; padding-block: 6px;
-    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) 0;
-    scroll-padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
-  }
-  /* end spacer: same gutter after the last square as before the first */
-  .kats::after { content: ""; flex: none; width: calc(max(var(--gutter), env(safe-area-inset-right, 0px)) - 8px); }
-  .kat { flex: none; width: clamp(88px, 27vw, 116px); scroll-snap-align: start; }
-}
-.kats::-webkit-scrollbar { display: none; }
-
-.m-list { padding-block: clamp(20px, 3vw, 40px) clamp(72px, 9vw, 130px); }
-.tiles-sec .m-list { padding-block: clamp(8px, 1.6vw, 24px) 0; }
-.m-cat { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 2fr); gap: 22px clamp(32px, 5vw, 84px); padding-block: clamp(36px, 4.4vw, 60px); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--bar-h) + 90px); }
+/* ---------- menu ---------- */
+.menu-sec { background: var(--beige); padding-block: var(--pad) 0; } /* the menu sits on a beige band */
+.m-list { padding-block: clamp(8px, 1.6vw, 24px) 0; }
+.m-cat { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 2fr); gap: 22px clamp(32px, 5vw, 84px); padding-block: clamp(36px, 4.4vw, 60px); border-top: 1px solid var(--line); }
 .m-cat.first { border-top: 0; }
 .m-cat-head { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
-.m-cat-head svg.ill { width: auto; height: clamp(58px, 5.6vw, 84px); }
-.m-cat h2, .m-cat h3 { font-size: clamp(38px, 3.8vw, 58px); }
+.m-cat-head svg.ill { width: auto; height: clamp(58px, 5.6vw, 84px); transform: perspective(600px) rotateY(calc(var(--t, 0) * -18deg)); will-change: transform; }
+.m-cat h3 { font-size: clamp(38px, 3.8vw, 58px); }
 .m-cat-sub { margin: -6px 0 0; font: italic 400 18px/1.2 var(--serif); color: var(--ink-2); }
 .items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(24px, 3.2vw, 52px); align-content: start; min-width: 0; }
 .item { padding: 18px 0 19px; border-bottom: 1px dashed rgba(43, 12, 6, .22); min-width: 0; }
@@ -324,16 +240,38 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 @media (max-width: 860px) { .m-cat { grid-template-columns: minmax(0, 1fr); } .m-cat-head { flex-direction: row; align-items: center; gap: 18px; } .m-cat-sub { margin: 0; } }
 @media (max-width: 560px) { .items { grid-template-columns: minmax(0, 1fr); } }
 
-.band { background: var(--beige); padding-block: clamp(64px, 8vw, 116px); text-align: center; }
-.band h2 { margin-bottom: clamp(24px, 2.6vw, 34px); }
-.band svg.ill { height: clamp(70px, 7vw, 104px); width: auto; margin: 0 auto 26px; }
+/* ---------- pause: bottle at the back, then the glass, then the cup ---------- */
+.pause { display: flex; justify-content: center; padding-block: clamp(64px, 8vw, 120px) clamp(56px, 7vw, 108px); }
+.pause-stage { --P: 900; --oy: 95%; width: clamp(260px, 36vw, 480px); aspect-ratio: 520 / 214; }
+.pause .scene { transform: rotateX(calc(var(--py, 0) * -4deg)) rotateY(calc(var(--t, 0) * -14deg + var(--px, 0) * 12deg)); }
+
+/* ---------- story ---------- */
+.about { background: var(--cream); padding-block: var(--pad); } /* cream, so it stands apart from the beige menu */
+.about-in { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1fr); gap: clamp(36px, 6.5vw, 116px); align-items: center; }
+.about-photo {
+  margin: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border-radius: var(--r); background: var(--beige-2);
+  transform: perspective(1200px) rotateX(calc(var(--py, 0) * -3deg)) rotateY(calc(var(--px, 0) * 4deg));
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+/* the photo is a touch larger than its frame and drifts a little slower than the page */
+.depth .about-photo img { transform: translate3d(0, calc(var(--t, 0) * -3.5%), 0) scale(1.08); will-change: transform; }
+.about-txt { min-width: 0; }
+.about-txt .body { max-width: 34ch; margin: clamp(22px, 2.2vw, 30px) 0 0; font-size: clamp(18px, 1.35vw, 21px); color: var(--ink-2); }
+.pull { position: relative; margin: clamp(64px, 8vw, 120px) 0 0; text-align: center; }
+.pull p {
+  max-width: 23ch; margin: 0 auto; font: italic 400 clamp(28px, 3.3vw, 50px)/1.18 var(--serif); font-variation-settings: "SOFT" 100, "WONK" 1;
+  letter-spacing: -.015em; color: var(--red); text-wrap: balance;
+}
+@media (max-width: 860px) { .about-in { grid-template-columns: minmax(0, 1fr); } .about-photo { aspect-ratio: 5 / 4; } .about-photo img { object-position: 50% 68%; } }
 
 /* ---------- footer ---------- */
+/* As you reach the end of the page, "Vi ses!" stands up and the cup and glass settle (--q goes from 0 to 1). */
 .foot { background: var(--red); color: var(--on-red); }
 .foot-top { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 36px 56px; flex-wrap: wrap; padding-block: clamp(72px, 9vw, 132px) clamp(48px, 6vw, 84px); }
 .vi {
   margin: 0; font: italic 600 clamp(80px, 14vw, 224px)/.84 var(--serif); font-variation-settings: "SOFT" 100, "WONK" 1;
   letter-spacing: -.035em; white-space: nowrap;
+  transform-origin: 50% 100%; transform: perspective(800px) rotateX(calc((1 - var(--q, 1)) * 32deg));
 }
 .follow { min-width: 0; }
 .follow .eyebrow { color: var(--on-red); }
@@ -341,14 +279,14 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 .soc a {
   display: inline-flex; align-items: center; gap: 9px; min-height: 50px; padding: 0 20px 0 16px; border-radius: 999px;
   background: var(--cream); color: var(--red); font: 600 15px/1 var(--ui); text-decoration: none;
-  box-shadow: 0 12px 22px -16px rgba(30, 4, 0, .7); transition: background .2s, transform .2s;
+  box-shadow: 0 12px 22px -16px rgba(30, 4, 0, .7); transition: background-color .25s var(--ease), transform .5s var(--spring);
 }
 .soc a:hover { background: var(--beige); transform: translateY(-2px); }
 .soc svg { width: 18px; height: 18px; flex: none; }
 .foot-ill { display: flex; align-items: flex-end; gap: clamp(12px, 1.6vw, 24px); margin-bottom: clamp(26px, 3vw, 40px); color: var(--on-red); }
 .foot-ill svg { display: block; overflow: visible; height: auto; }
-.foot-ill .c { width: clamp(92px, 8.4vw, 136px); transform: rotate(-7deg); }
-.foot-ill .w { width: clamp(46px, 4.2vw, 68px); transform: rotate(9deg); }
+.foot-ill .c { width: clamp(92px, 8.4vw, 136px); transform: translate3d(0, calc((1 - var(--q, 1)) * 28px), 0) rotate(calc(-7deg - (1 - var(--q, 1)) * 12deg)); }
+.foot-ill .w { width: clamp(46px, 4.2vw, 68px); transform: translate3d(0, calc((1 - var(--q, 1)) * 44px), 0) rotate(calc(9deg + (1 - var(--q, 1)) * 14deg)); }
 @media (max-width: 700px) { .foot-ill { display: none; } }
 .legal {
   display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap;
@@ -356,9 +294,22 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   font: 500 13.5px/1.45 var(--ui); color: rgba(253, 244, 234, .82);
 }
 
-/* ---------- gentle lift as things scroll in (content stays visible) ---------- */
-.js .lift.go { animation: lift .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 90ms); }
-@keyframes lift { from { transform: translateY(18px); } }
+/* ---------- arrivals ---------- */
+/* Text starts a little low and leaning back, then stands up into place. Nothing is ever hidden. */
+.hero-txt > * { transform-origin: 50% 100%; animation: rise-in 1.1s var(--ease-out) backwards; }
+.hero-txt > :nth-child(1) { animation-delay: .1s; }
+.hero-txt > :nth-child(2) { animation-delay: .18s; }
+.hero-txt > :nth-child(3) { animation-delay: .26s; }
+.hero-txt > :nth-child(4) { animation-delay: .34s; }
+.hero-txt > :nth-child(5) { animation-delay: .42s; }
+@keyframes rise-in {
+  from { transform: perspective(900px) translate3d(0, 26px, 0) rotateX(14deg); }
+  to { transform: perspective(900px) translate3d(0, 0, 0) rotateX(0deg); }
+}
+/* further down, site.js marks text that starts below the screen (.pre) and lets it go as it comes into view */
+.rise { transform-origin: 50% 100%; transition: transform 1.1s var(--ease-out); }
+.rise.pre { transform: perspective(900px) translate3d(0, 30px, 0) rotateX(14deg); transition: none; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -443,26 +394,24 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       <p class="moved"><span><b>Sesong</b> har flyttet til Eidsiva gate 7 og heter nå Lokkale</span></p>
     </div>
     <div class="hero-art">
-      <div class="arch"><svg class="hero-draw" viewBox="74 120 292 214" role="img" aria-label="Tegning av en mokkakanne, en kopp kaffe og kaffebønner"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="170" cy="152" r="6"/><path d="M126 170q44-20 88 0"/>
-        <path d="M126 170l14 66h60l14-66"/><path d="M214 170l26-9-19 27"/><path d="M128 182c-36 3-36 48 10 50"/>
-        <path d="M134 236h72v11h-72z"/><path d="M140 247l-20 84h100l-20-84"/><path d="M170 172v64M170 247v84" stroke-width="2.2"/>
-        <g transform="translate(0 -8)"><path d="M248 284h80v12a40 36 0 0 1-80 0z"/><path d="M328 292h6a11 11 0 0 1 0 22h-10"/><ellipse cx="288" cy="331" rx="52" ry="8"/>
-        <path d="M259 296c5-5 9 5 14 0s9 5 14 0 9 5 14 0 9 5 14 0" stroke-width="2.4"/>
-        <path d="M272 268c-7-8 7-12 0-22M288 264c-7-8 7-12 0-22M304 268c-7-8 7-12 0-22"/></g>
-        <path d="M84 342c90-7 190-7 272 0"/>
-      </g></g></svg></div>
+      <div class="hero-stage">
+        <div class="stage" role="img" aria-label="Tegning av en mokkakanne og en kopp kaffe"><div class="scene">
+          <svg class="ly" viewBox="74 120 292 214" style="--z:0" aria-hidden="true"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M84 342c90-7 190-7 272 0"/><circle cx="170" cy="152" r="6"/><path d="M126 170q44-20 88 0"/><path d="M126 170l14 66h60l14-66"/><path d="M214 170l26-9-19 27"/><path d="M128 182c-36 3-36 48 10 50"/><path d="M134 236h72v11h-72z"/><path d="M140 247l-20 84h100l-20-84"/><path d="M170 172v64M170 247v84" stroke-width="2.2"/></g></g></svg>
+          <svg class="ly" viewBox="74 120 292 214" style="--z:40" aria-hidden="true"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(0 -8)"><path d="M248 284h80v12a40 36 0 0 1-80 0z"/><path d="M328 292h6a11 11 0 0 1 0 22h-10"/><ellipse cx="288" cy="331" rx="52" ry="8"/><path d="M259 296c5-5 9 5 14 0s9 5 14 0 9 5 14 0 9 5 14 0" stroke-width="2.4"/></g></g></g></svg>
+          <svg class="ly" viewBox="74 120 292 214" style="--z:64" aria-hidden="true"><g class="boil" transform="translate(0 -18)"><g filter="url(#pencil)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(0 -8)"><rect x="252" y="234" width="72" height="44" fill="none" stroke="none"/><path d="M272 268c-7-8 7-12 0-22M288 264c-7-8 7-12 0-22M304 268c-7-8 7-12 0-22"/></g></g></g></svg>
+        </div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="tiles-sec" aria-labelledby="t-h">
+<section class="menu-sec" aria-labelledby="t-h">
   <div class="wrap" id="hva">
     <p class="eyebrow">Konsept</p>
     <h2 id="t-h">Menyen vår</h2>
     <div class="m-list">
     <section class="m-cat first" data-cat="kaffe" aria-labelledby="c-kaffe">
-      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><use href="#i-cup"/></svg><div><h3 id="c-kaffe">Kaffe</h3></div></div>
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><g class="boil"><use href="#i-cup"/></g></svg><div><h3 id="c-kaffe">Kaffe</h3></div></div>
       <ul class="items">
         <li class="item"><p class="n"><span>Filterkaffe</span><span class="pr">– 42,-</span></p><p class="d">Med gratis påfyll.</p></li>
         <li class="item"><p class="n"><span>Cortado</span><span class="pr">– 45,-</span><span class="fav"><svg aria-hidden="true"><use href="#i-heart"/></svg>Favoritt</span></p><p class="d">Espresso med litt varm melk.</p></li>
@@ -471,7 +420,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       </ul>
     </section>
     <section class="m-cat" data-cat="vin" aria-labelledby="c-vin">
-      <div class="m-cat-head"><svg class="ill tall" viewBox="0 0 80 152" aria-hidden="true"><use href="#i-wine"/></svg><div><h3 id="c-vin">Vin</h3><p class="m-cat-sub">glass / flaske</p></div></div>
+      <div class="m-cat-head"><svg class="ill tall" viewBox="0 0 80 152" aria-hidden="true"><g class="boil"><use href="#i-wine"/></g></svg><div><h3 id="c-vin">Vin</h3><p class="m-cat-sub">glass / flaske</p></div></div>
       <ul class="items">
         <li class="item"><p class="n"><span>Crémant</span><span class="pr">– 139 / 650,-</span><span class="fav"><svg aria-hidden="true"><use href="#i-heart"/></svg>Favoritt</span></p><p class="d">Tørre, fine bobler.</p></li>
         <li class="item"><p class="n"><span>Riesling</span><span class="pr">– 135 / 620,-</span></p><p class="d">Frisk og mineralsk.</p></li>
@@ -480,7 +429,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       </ul>
     </section>
     <section class="m-cat" data-cat="bakevarer" aria-labelledby="c-bakevarer">
-      <div class="m-cat-head"><svg class="ill" viewBox="0 0 150 100" aria-hidden="true"><use href="#i-loaf"/></svg><div><h3 id="c-bakevarer">Bakevarer</h3></div></div>
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 150 100" aria-hidden="true"><g class="boil"><use href="#i-loaf"/></g></svg><div><h3 id="c-bakevarer">Bakevarer</h3></div></div>
       <ul class="items">
         <li class="item"><p class="n"><span>Kanelbolle</span><span class="pr">– 49,-</span></p><p class="d">Saftig, med kanel og kardemomme.</p></li>
         <li class="item"><p class="n"><span>Croissant</span><span class="pr">– 42,-</span></p><p class="d">Sprø og smørrik.</p></li>
@@ -488,7 +437,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       </ul>
     </section>
     <section class="m-cat" data-cat="smaretter" aria-labelledby="c-smaretter">
-      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><use href="#i-bowl"/></svg><div><h3 id="c-smaretter">Småretter</h3></div></div>
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><g class="boil"><use href="#i-bowl"/></g></svg><div><h3 id="c-smaretter">Småretter</h3></div></div>
       <ul class="items">
         <li class="item"><p class="n"><span>Dagens suppe</span><span class="pr">– 149,-</span></p><p class="d">Med brød og smør.</p></li>
         <li class="item"><p class="n"><span>Toast</span><span class="pr">– 139,-</span></p><p class="d">Ost og skinke på surdeigsbrød.</p></li>
@@ -498,27 +447,25 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
     </div>
   </div>
   <div class="pause" aria-hidden="true">
-    <svg viewBox="0 0 520 214"><g class="boil">
-      <rect width="520" height="214" fill="transparent"/>
-      <use href="#i-bottle" x="150" y="26" width="57" height="180"/>
-      <use href="#i-wine" x="224" y="78" width="72" height="137"/>
-      <use href="#i-cup" x="298" y="100" width="130" height="104"/>
-      <path d="M92 204c100-7 240-7 340 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" filter="url(#pencil)"/>
-    </g></svg>
+    <div class="pause-stage"><div class="scene">
+      <svg class="ly" viewBox="0 0 520 214" style="--z:0" aria-hidden="true"><g class="boil"><path d="M92 204c100-7 240-7 340 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" filter="url(#pencil)"/><use href="#i-bottle" x="150" y="26" width="57" height="180"/></g></svg>
+      <svg class="ly" viewBox="0 0 520 214" style="--z:22" aria-hidden="true"><g class="boil"><use href="#i-wine" x="224" y="78" width="72" height="137"/></g></svg>
+      <svg class="ly" viewBox="0 0 520 214" style="--z:44" aria-hidden="true"><g class="boil"><use href="#i-cup" x="298" y="100" width="130" height="104"/></g></svg>
+    </div></div>
   </div>
 </section>
 
 <section class="about" id="om" aria-labelledby="om-h">
   <div class="wrap">
     <div class="about-in">
-      <figure class="about-photo"><img src="img/venner.webp" width="1100" height="1650" alt="En vennegjeng ler sammen med kaffekopper i hendene" loading="lazy"></figure>
+      <figure class="about-photo"><img src="img/venner.webp" width="1100" height="1650" alt="En vennegjeng ler sammen med kaffekopper i hendene" loading="lazy" decoding="async"></figure>
       <div class="about-txt">
         <p class="eyebrow">Om oss</p>
         <h2 id="om-h">Hverdagshistorier. <em>Menneskemøter.</em></h2>
         <p class="body">Eidsvoll er et historisk sted, hvor grunnloven ble underskrevet. Nå ønsker vi å skape nye historier rundt bordet, gjennom mat og drikke.</p>
       </div>
     </div>
-    <blockquote class="pull lift"><p>«Vi ønsker å skape et sted der folk trives, senker skuldrene og har lyst til å komme tilbake.»</p></blockquote>
+    <blockquote class="pull"><p>«Vi ønsker å skape et sted der folk trives, senker skuldrene og har lyst til å komme tilbake.»</p></blockquote>
   </div>
 </section>
 </main>
@@ -528,8 +475,8 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
     <p class="vi">Vi ses!</p>
     <div class="follow">
       <div class="foot-ill" aria-hidden="true">
-        <svg class="c" viewBox="0 0 140 112"><use href="#i-cup"/></svg>
-        <svg class="w" viewBox="0 0 80 152"><use href="#i-wine"/></svg>
+        <svg class="c" viewBox="0 0 140 112"><g class="boil"><use href="#i-cup"/></g></svg>
+        <svg class="w" viewBox="0 0 80 152"><g class="boil"><use href="#i-wine"/></g></svg>
       </div>
       <p class="eyebrow">Følg oss</p>
       <div class="soc">
@@ -546,90 +493,196 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 (() => {
   const d = document, root = d.documentElement;
   const $ = (s, r = d) => r.querySelector(s), $$ = (s, r = d) => [...r.querySelectorAll(s)];
+  const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
   root.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ---- Mobile drawer ---- */
+  /* ---- Mobile drawer: glides in, and the links follow one after another ---- */
   const burger = $('#burger'), drawer = $('#drawer'), shut = $('#drawer-x');
   if (burger && drawer) {
+    $$('nav a, .btn', drawer).forEach((a, i) => a.style.setProperty('--i', i));
+    let hideT = 0;
+    const isOpen = () => drawer.classList.contains('open');
     const setOpen = open => {
-      drawer.hidden = !open;
+      clearTimeout(hideT);
       burger.setAttribute('aria-expanded', String(open));
       d.body.style.overflow = open ? 'hidden' : '';
-      (open ? shut : burger).focus();
+      if (open) {
+        drawer.hidden = false;
+        void drawer.offsetWidth; // start from the closed look, so it can glide in
+        drawer.classList.add('open');
+      } else {
+        drawer.classList.remove('open');
+        hideT = setTimeout(() => { drawer.hidden = true; }, reduce ? 0 : 320);
+      }
+      (open ? shut : burger).focus({ preventScroll: true });
     };
     burger.addEventListener('click', () => setOpen(true));
     shut.addEventListener('click', () => setOpen(false));
     drawer.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-    addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) setOpen(false); });
-    addEventListener('resize', () => { if (innerWidth > 860 && !drawer.hidden) setOpen(false); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    addEventListener('resize', () => { if (innerWidth > 860 && isOpen()) setOpen(false); });
   }
 
-  /* ---- Bar gets a soft shadow once the page moves ---- */
-  const bar = $('#bar');
-  if (bar) {
-    // While the red hours strip still touches the top of the screen, the area by the status bar
-    // (and the browser's own tint, via theme-color) is red; once it scrolls away it matches the cream bar.
-    const strip = $('.strip'), theme = $('meta[name="theme-color"]');
-    let top = null;
-    const onScroll = () => {
-      bar.classList.toggle('lifted', scrollY > 30);
-      const t = !strip || strip.getBoundingClientRect().bottom > 1;
-      if (t === top) return;
-      top = t;
-      root.classList.toggle('at-top', t);
-      if (theme) theme.setAttribute('content', t ? '#CC3C20' : '#FEFBF6');
-    };
-    addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  /* ---- Bar: a soft shadow once the page moves ---- */
+  // While the red hours strip still touches the top of the screen, the area by the status bar
+  // (and the browser's own tint, via theme-color) is red; once it scrolls away it matches the cream bar.
+  // The strip's height is measured up front (see measure below), so a scroll never has to stop and measure the page.
+  const bar = $('#bar'), strip = $('.strip'), theme = $('meta[name="theme-color"]');
+  let atTop = null, stripBottom = 0;
+  const barState = () => {
+    if (!bar) return;
+    bar.classList.toggle('lifted', scrollY > 30);
+    const t = !strip || stripBottom - scrollY > 1;
+    if (t === atTop) return;
+    atTop = t;
+    root.classList.toggle('at-top', t);
+    if (theme) theme.setAttribute('content', t ? '#CC3C20' : '#FEFBF6');
+  };
 
-  /* ---- Menu page: category squares ---- */
-  const kats = $$('.kat'), cats = $$('.m-cat'), row = $('.kats');
-  if (kats.length && cats.length && row) {
-    const ids = cats.map(c => c.dataset.cat);
-    // On phones the row scrolls sideways: keep the chosen square in view
-    const reveal = (k, smooth) => {
-      const r = row.getBoundingClientRect(), b = k.getBoundingClientRect(), pad = 16;
-      const dx = b.left < r.left + pad ? b.left - r.left - pad : b.right > r.right - pad ? b.right - r.right + pad : 0;
-      if (dx) row.scrollBy({ left: dx, behavior: smooth && !reduce ? 'smooth' : 'auto' });
-    };
-    const show = (id, smooth) => {
-      const all = !ids.includes(id);
-      cats.forEach((c, i) => {
-        c.hidden = !all && c.dataset.cat !== id;
-        c.classList.toggle('first', all ? i === 0 : c.dataset.cat === id);
-      });
-      kats.forEach(k => {
-        const on = all ? k.dataset.cat === 'alle' : k.dataset.cat === id;
-        k.setAttribute('aria-pressed', String(on));
-        if (on) reveal(k, smooth);
-      });
-    };
-    kats.forEach(k => k.addEventListener('click', () => {
-      const id = k.dataset.cat;
-      show(id, true);
-      try { history.replaceState(null, '', '#' + id); } catch (_) {}
-      // a short line boil on tap, for screens without hover
-      if (!reduce) {
-        k.classList.add('boiling');
-        clearTimeout(k._boil);
-        k._boil = setTimeout(() => k.classList.toggle('boiling', false), 900);
+  /* ---- The nav keeps an underline under the section you are reading ---- */
+  const links = $$('.nav a[href^="#"], .drawer nav a[href^="#"]');
+  const spots = [];
+  links.forEach(a => {
+    const el = d.getElementById(a.hash.slice(1)), sec = el && el.closest('section, footer');
+    if (sec && !spots.some(s => s.hash === a.hash)) spots.push({ hash: a.hash, el: sec, top: 0 });
+  });
+  let current;
+  const navState = (y, vh, maxY) => {
+    let c = null;
+    for (const s of spots) if (s.top <= y + vh * .4) c = s.hash;
+    if (spots.length && y >= maxY - 4) c = spots[spots.length - 1].hash;
+    if (c === current) return;
+    current = c;
+    links.forEach(a => (a.hash === c ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+  };
+
+  /* ---- Depth: drawings turn a little as you pass them and lean toward the pointer; the photo sits deeper than its frame.
+     Positions are measured up front (and again when the layout changes), so scrolling only does a little arithmetic
+     and writes a few CSS variables. Values glide toward their targets, which keeps the movement soft. ---- */
+  // Each entry: the element whose place on the page drives it (by), the elements that use each value (to; the values
+  // do not inherit, so only those elements are restyled), and for the pointer, the area where it counts.
+  const depth = [];
+  const add = (by, to, o = {}) => { if (by && Object.values(to).every(l => l.every(Boolean))) depth.push({ by, to, area: o.area || null, end: !!o.end, aim: {}, now: {}, out: {} }); };
+  if (!reduce) {
+    root.classList.add('depth');
+    const heroScene = $('.hero .scene'), pauseScene = $('.pause .scene'), photo = $('.about-photo');
+    add($('.hero-art'), { t: [heroScene], px: [heroScene], py: [heroScene] }, { area: $('.hero') });
+    $$('.m-cat-head').forEach(h => add(h, { t: [$('svg.ill', h)] }));
+    add($('.pause-stage'), { t: [pauseScene], px: [pauseScene], py: [pauseScene] }, { area: $('.pause') });
+    add(photo, { t: [$('img', photo || d)], px: [photo], py: [photo] }, { area: photo });
+    add($('.foot .vi'), { q: [$('.foot .vi'), ...$$('.foot-ill svg')] }, { end: true });
+  }
+  // layout positions, ignoring transforms, so the movement never feeds back into the measuring
+  const docTop = el => { let y = 0; for (let e = el; e; e = e.offsetParent) y += e.offsetTop; return y; };
+  const docLeft = el => { let x = 0; for (let e = el; e; e = e.offsetParent) x += e.offsetLeft; return x; };
+
+  let vh = innerHeight, maxY = 1, pointer = null, raf = 0, last = 0, first = true;
+  const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+  const measure = () => {
+    vh = innerHeight;
+    maxY = Math.max(1, root.scrollHeight - vh);
+    for (const it of depth) {
+      it.top = docTop(it.by); it.h = it.by.offsetHeight;
+      it.cx = docLeft(it.by) + it.by.offsetWidth / 2; it.cy = it.top + it.h / 2;
+      if (it.area) { it.at = docTop(it.area); it.al = docLeft(it.area); it.aw = it.area.offsetWidth; it.ah = it.area.offsetHeight; }
+    }
+    for (const s of spots) s.top = docTop(s.el);
+    spots.sort((a, b) => a.top - b.top);
+    if (strip) stripBottom = docTop(strip) + strip.offsetHeight;
+    barState();
+    kick();
+  };
+  const target = (it, y) => {
+    const a = it.aim;
+    if (it.end) { // 0 when "Vi ses!" peeks in at the bottom, 1 at the very end of the page
+      const from = it.top - vh;
+      a.q = clamp((y - from) / Math.max(1, maxY - from), 0, 1);
+      return;
+    }
+    a.t = clamp((it.top + it.h / 2 - y - vh / 2) / (vh / 2 + it.h / 2), -1, 1);
+    if (!it.area) return;
+    a.px = a.py = 0;
+    if (pointer) {
+      const top = it.at - y;
+      if (pointer.x >= it.al && pointer.x <= it.al + it.aw && pointer.y >= top && pointer.y <= top + it.ah) {
+        // full lean at the edge of the area on each side, even when the drawing is not in the middle of it
+        const dx = pointer.x - it.cx, dy = pointer.y + y - it.cy;
+        a.px = clamp(dx / Math.max(40, dx > 0 ? it.al + it.aw - it.cx : it.cx - it.al), -1, 1);
+        a.py = clamp(dy / Math.max(40, dy > 0 ? it.at + it.ah - it.cy : it.cy - it.at), -1, 1);
       }
-    }));
-    const fromHash = () => show(location.hash.slice(1), false);
-    addEventListener('hashchange', fromHash);
-    fromHash();
+    }
+  };
+  function frame(now) {
+    raf = 0;
+    const y = scrollY;
+    navState(y, vh, maxY);
+    if (!depth.length) return;
+    const dt = last ? Math.min(.05, (now - last) / 1000) : 1 / 60;
+    last = now;
+    const kScroll = 1 - Math.exp(-dt * 8), kPointer = 1 - Math.exp(-dt * 5);
+    let busy = false;
+    for (const it of depth) {
+      target(it, y);
+      for (const k in it.aim) {
+        const goal = it.aim[k];
+        let v = it.now[k];
+        v = first || v === undefined ? goal : v + (goal - v) * (k === 'px' || k === 'py' ? kPointer : kScroll);
+        if (Math.abs(goal - v) < .001) v = goal; else busy = true;
+        it.now[k] = v;
+        const s = v.toFixed(3); // a thousandth is well under a tenth of a degree: finer steps would only cost work
+        if (s !== it.out[k]) {
+          it.out[k] = s;
+          for (const el of it.to[k]) el.style.setProperty('--' + k, s);
+        }
+      }
+    }
+    first = false;
+    if (busy) kick(); else last = 0;
   }
 
-  /* ---- Gentle lift for groups below the fold (they stay visible the whole time) ---- */
-  const lifts = $$('.lift');
-  if (!reduce && 'IntersectionObserver' in window && lifts.length) {
-    const vh = innerHeight;
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('go'); io.unobserve(e.target); }
-    }));
-    lifts.forEach(el => { if (el.getBoundingClientRect().top > vh) io.observe(el); });
+  addEventListener('scroll', () => { barState(); kick(); }, { passive: true });
+  addEventListener('resize', measure, { passive: true });
+  addEventListener('load', measure);
+  if (d.fonts && d.fonts.ready) d.fonts.ready.then(measure);
+  if ('ResizeObserver' in window) new ResizeObserver(() => measure()).observe(d.body);
+  if (mouse && depth.length) {
+    addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { pointer = { x: e.clientX, y: e.clientY }; kick(); } }, { passive: true });
+    d.addEventListener('mouseout', e => { if (!e.relatedTarget) { pointer = null; kick(); } });
+  }
+  measure();
+
+  /* ---- Text further down stands up into place the first time it comes into view (it is visible all along) ---- */
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left)
+        .forEach((e, k) => {
+          e.target.style.transitionDelay = Math.min(k, 6) * 70 + 'ms'; // things that arrive together come in one after another
+          e.target.classList.remove('pre');
+          io.unobserve(e.target);
+        });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    const fold = innerHeight;
+    $$('.menu-sec .eyebrow, .menu-sec h2, .m-cat-head, .item, .about-txt > *, .pull, .follow > .eyebrow, .soc').forEach(el => {
+      if (el.getBoundingClientRect().top > fold) { el.classList.add('rise', 'pre'); io.observe(el); }
+    });
+  }
+
+  // iPhones only show the pressed look of buttons (:active) when the page listens for touches
+  d.addEventListener('touchstart', () => {}, { passive: true });
+
+  /* ---- On touch screens there is no hover, so a tap makes a drawing boil for a moment ---- */
+  if (!reduce) {
+    d.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse' || !e.target.closest) return;
+      const art = e.target.closest('.hero-stage, .pause-stage, .m-cat-head, .foot-ill');
+      if (!art) return;
+      art.classList.add('boiling');
+      clearTimeout(art._boil);
+      art._boil = setTimeout(() => art.classList.remove('boiling'), 900);
+    }, { passive: true });
   }
 })();
 </script>
