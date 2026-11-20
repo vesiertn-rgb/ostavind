@@ -307,11 +307,12 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 .kats::-webkit-scrollbar { display: none; }
 
 .m-list { padding-block: clamp(20px, 3vw, 40px) clamp(72px, 9vw, 130px); }
+.tiles-sec .m-list { padding-block: clamp(8px, 1.6vw, 24px) 0; }
 .m-cat { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 2fr); gap: 22px clamp(32px, 5vw, 84px); padding-block: clamp(36px, 4.4vw, 60px); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--bar-h) + 90px); }
 .m-cat.first { border-top: 0; }
 .m-cat-head { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
 .m-cat-head svg.ill { width: auto; height: clamp(58px, 5.6vw, 84px); }
-.m-cat h2 { font-size: clamp(38px, 3.8vw, 58px); }
+.m-cat h2, .m-cat h3 { font-size: clamp(38px, 3.8vw, 58px); }
 .m-cat-sub { margin: -6px 0 0; font: italic 400 18px/1.2 var(--serif); color: var(--ink-2); }
 .items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(24px, 3.2vw, 52px); align-content: start; min-width: 0; }
 .item { padding: 18px 0 19px; border-bottom: 1px dashed rgba(43, 12, 6, .22); min-width: 0; }
@@ -436,7 +437,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
       <h1 id="hero-h">I hjertet av <em>Sundet</em> i Eidsvoll</h1>
       <p class="lede">Skapt av kjærlighet til gode råvarer, lokale produsenter og de små øyeblikkene i hverdagen.</p>
       <div class="ctas">
-        <a class="btn btn-red" href="meny.html">Se menyen<svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></a>
+        <a class="btn btn-red" href="#hva">Se menyen<svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></a>
         <a class="link" href="https://maps.google.com/?q=Eidsiva+gate+7,+2080+Eidsvoll" target="_blank" rel="noopener">Finn oss<svg aria-hidden="true"><use href="#arrow"/></svg></a>
       </div>
       <p class="moved"><span><b>Sesong</b> har flyttet til Eidsiva gate 7 og heter nå Lokkale</span></p>
@@ -459,12 +460,42 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
   <div class="wrap" id="hva">
     <p class="eyebrow">Konsept</p>
     <h2 id="t-h">Menyen vår</h2>
-    <ul class="tiles">
-      <li class="lift" style="--i:0"><a href="meny.html#kaffe"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><g class="boil"><use href="#i-cup"/></g></svg><span class="t-foot"><span class="t-name">Kaffe</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
-      <li class="lift" style="--i:1"><a href="meny.html#vin"><svg class="ill tall" viewBox="0 0 80 152" aria-hidden="true"><g class="boil"><use href="#i-wine"/></g></svg><span class="t-foot"><span class="t-name">Vin</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
-      <li class="lift" style="--i:2"><a href="meny.html#bakevarer"><svg class="ill" viewBox="0 0 150 100" aria-hidden="true"><g class="boil"><use href="#i-loaf"/></g></svg><span class="t-foot"><span class="t-name">Bakevarer</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
-      <li class="lift" style="--i:3"><a href="meny.html#smaretter"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><g class="boil"><use href="#i-bowl"/></g></svg><span class="t-foot"><span class="t-name">Småretter</span><svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></span></a></li>
-    </ul>
+    <div class="m-list">
+    <section class="m-cat first" data-cat="kaffe" aria-labelledby="c-kaffe">
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><use href="#i-cup"/></svg><div><h3 id="c-kaffe">Kaffe</h3></div></div>
+      <ul class="items">
+        <li class="item"><p class="n"><span>Filterkaffe</span><span class="pr">– 42,-</span></p><p class="d">Med gratis påfyll.</p></li>
+        <li class="item"><p class="n"><span>Cortado</span><span class="pr">– 45,-</span><span class="fav"><svg aria-hidden="true"><use href="#i-heart"/></svg>Favoritt</span></p><p class="d">Espresso med litt varm melk.</p></li>
+        <li class="item"><p class="n"><span>Cappuccino</span><span class="pr">– 54,-</span></p><p class="d">Med silkemykt melkeskum.</p></li>
+        <li class="item"><p class="n"><span>Caffè latte</span><span class="pr">– 58,-</span></p><p class="d">Mild og kremet.</p></li>
+      </ul>
+    </section>
+    <section class="m-cat" data-cat="vin" aria-labelledby="c-vin">
+      <div class="m-cat-head"><svg class="ill tall" viewBox="0 0 80 152" aria-hidden="true"><use href="#i-wine"/></svg><div><h3 id="c-vin">Vin</h3><p class="m-cat-sub">glass / flaske</p></div></div>
+      <ul class="items">
+        <li class="item"><p class="n"><span>Crémant</span><span class="pr">– 139 / 650,-</span><span class="fav"><svg aria-hidden="true"><use href="#i-heart"/></svg>Favoritt</span></p><p class="d">Tørre, fine bobler.</p></li>
+        <li class="item"><p class="n"><span>Riesling</span><span class="pr">– 135 / 620,-</span></p><p class="d">Frisk og mineralsk.</p></li>
+        <li class="item"><p class="n"><span>Rosé</span><span class="pr">– 129 / 590,-</span></p><p class="d">Lys, tørr og bærpreget.</p></li>
+        <li class="item"><p class="n"><span>Pinot Noir</span><span class="pr">– 145 / 690,-</span></p><p class="d">Lett rødvin med modne bær.</p></li>
+      </ul>
+    </section>
+    <section class="m-cat" data-cat="bakevarer" aria-labelledby="c-bakevarer">
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 150 100" aria-hidden="true"><use href="#i-loaf"/></svg><div><h3 id="c-bakevarer">Bakevarer</h3></div></div>
+      <ul class="items">
+        <li class="item"><p class="n"><span>Kanelbolle</span><span class="pr">– 49,-</span></p><p class="d">Saftig, med kanel og kardemomme.</p></li>
+        <li class="item"><p class="n"><span>Croissant</span><span class="pr">– 42,-</span></p><p class="d">Sprø og smørrik.</p></li>
+        <li class="item"><p class="n"><span>Gulrotkake</span><span class="pr">– 69,-</span></p><p class="d">Med ostekrem.</p></li>
+      </ul>
+    </section>
+    <section class="m-cat" data-cat="smaretter" aria-labelledby="c-smaretter">
+      <div class="m-cat-head"><svg class="ill" viewBox="0 0 140 112" aria-hidden="true"><use href="#i-bowl"/></svg><div><h3 id="c-smaretter">Småretter</h3></div></div>
+      <ul class="items">
+        <li class="item"><p class="n"><span>Dagens suppe</span><span class="pr">– 149,-</span></p><p class="d">Med brød og smør.</p></li>
+        <li class="item"><p class="n"><span>Toast</span><span class="pr">– 139,-</span></p><p class="d">Ost og skinke på surdeigsbrød.</p></li>
+        <li class="item"><p class="n"><span>Ostefat</span><span class="pr">– 189,-</span></p><p class="d">Tre oster, kjeks og marmelade.</p></li>
+      </ul>
+    </section>
+    </div>
   </div>
   <div class="pause" aria-hidden="true">
     <svg viewBox="0 0 520 214"><g class="boil">
