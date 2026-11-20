@@ -199,7 +199,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 @media (max-width: 700px) { .squares { grid-template-columns: repeat(2, minmax(0, 1fr)); } .squares li:first-child { grid-column: 1 / -1; } }
 
 /* ---------- category tiles ---------- */
-.tiles-sec { padding-block: var(--pad) 0; }
+.tiles-sec { padding-block: 0; } /* follows the hero directly; the hero's bottom padding is the gap */
 .tiles { list-style: none; margin: clamp(32px, 4vw, 54px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); }
 .tiles li { min-width: 0; }
 .tiles a {
@@ -452,20 +452,6 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
         <path d="M84 342c90-7 190-7 272 0"/>
       </g></g></svg></div>
     </div>
-  </div>
-</section>
-
-<section class="table" aria-labelledby="pb-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><p class="eyebrow">På bordet</p><h2 id="pb-h">Kaffe, vin og noe godt til</h2></div>
-      <a class="btn btn-line" href="meny.html">Se hele menyen<svg class="go-r" aria-hidden="true"><use href="#arrow-r"/></svg></a>
-    </div>
-    <ul class="squares">
-      <li class="lift" style="--i:0"><figure><div class="sq"><img src="img/knuter.webp" width="960" height="960" alt="Knuter på et brett ved vinduet" loading="lazy"></div><figcaption>Knuter</figcaption></figure></li>
-      <li class="lift" style="--i:1"><figure><div class="sq"><img src="img/kurv.webp" width="960" height="960" alt="Knuter med melis i en kurv med et rødt kjøkkenhåndkle" loading="lazy"></div><figcaption>I kurven</figcaption></figure></li>
-      <li class="lift" style="--i:2"><figure><div class="sq"><img src="img/brod.webp" width="960" height="960" alt="Grove brød stablet tett i tett" loading="lazy"></div><figcaption>Brød</figcaption></figure></li>
-    </ul>
   </div>
 </section>
 

@@ -199,7 +199,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 @media (max-width: 700px) { .squares { grid-template-columns: repeat(2, minmax(0, 1fr)); } .squares li:first-child { grid-column: 1 / -1; } }
 
 /* ---------- category tiles ---------- */
-.tiles-sec { padding-block: var(--pad) 0; }
+.tiles-sec { padding-block: 0; } /* follows the hero directly; the hero's bottom padding is the gap */
 .tiles { list-style: none; margin: clamp(32px, 4vw, 54px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); }
 .tiles li { min-width: 0; }
 .tiles a {
