@@ -199,7 +199,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 @media (max-width: 700px) { .squares { grid-template-columns: repeat(2, minmax(0, 1fr)); } .squares li:first-child { grid-column: 1 / -1; } }
 
 /* ---------- category tiles ---------- */
-.tiles-sec { padding-block: 0; } /* follows the hero directly; the hero's bottom padding is the gap */
+.tiles-sec { background: var(--beige); padding-block: var(--pad) 0; } /* the menu sits on a beige band */
 .tiles { list-style: none; margin: clamp(32px, 4vw, 54px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); }
 .tiles li { min-width: 0; }
 .tiles a {
@@ -238,7 +238,7 @@ h1 em, h2 em { font-style: italic; font-weight: 500; font-variation-settings: "S
 .pause svg { width: clamp(260px, 36vw, 480px); height: auto; overflow: visible; color: var(--red); }
 
 /* ---------- story ---------- */
-.about { background: var(--beige); padding-block: var(--pad); }
+.about { background: var(--cream); padding-block: var(--pad); } /* cream, so it stands apart from the beige menu */
 .about-in { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1fr); gap: clamp(36px, 6.5vw, 116px); align-items: center; }
 .about-photo { margin: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border-radius: var(--r); background: var(--beige-2); }
 .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
